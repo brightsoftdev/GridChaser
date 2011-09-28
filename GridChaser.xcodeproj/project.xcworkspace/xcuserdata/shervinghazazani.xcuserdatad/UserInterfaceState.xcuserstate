@@ -8539,9 +8539,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>338929707.63147998</real>
-		<string>{262, 1536}</string>
-		<string>{1733, 0}</string>
+		<real>338931645.80609798</real>
+		<string>{256, 1524}</string>
+		<string>{727, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -10825,7 +10825,7 @@
 		<string>IDEActiveWorkspaceTabController</string>
 		<string>IDEWindowToolbarIsVisible</string>
 		<string>IDEWindowTabBarIsVisible</string>
-		<string>{{2, 113}, {1703, 1065}}</string>
+		<string>{{4, 112}, {1703, 1065}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -13396,7 +13396,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1043</integer>
+					<integer>1040</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -13475,7 +13475,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1063</integer>
+					<integer>1061</integer>
 				</dict>
 			</array>
 		</dict>
@@ -13529,22 +13529,12 @@
 					<key>CF$UID</key>
 					<integer>1060</integer>
 				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>1061</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>1062</integer>
-				</dict>
 			</array>
 		</dict>
 		<string>GridChaser</string>
 		<string>Classes</string>
-		<string>Scenes</string>
-		<string>GameplayScene</string>
-		<string>Layers</string>
-		<string>GameplayLayer.m</string>
+		<string>Game Objects</string>
+		<string>PlayerCar.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -13555,19 +13545,19 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
+					<integer>1062</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>1063</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>1064</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1065</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>1066</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>1068</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -13591,11 +13581,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1078</integer>
+					<integer>1077</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1080</integer>
+					<integer>1079</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -13685,7 +13675,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1067</integer>
+					<integer>1065</integer>
 				</dict>
 			</array>
 		</dict>
@@ -13712,14 +13702,16 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1059</integer>
+					<integer>1067</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1060</integer>
+					<integer>1068</integer>
 				</dict>
 			</array>
 		</dict>
+		<string>Scenes</string>
+		<string>GameplayScene</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -13796,7 +13788,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1059</integer>
+					<integer>1067</integer>
 				</dict>
 			</array>
 		</dict>
@@ -13853,11 +13845,10 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1077</integer>
+					<integer>1059</integer>
 				</dict>
 			</array>
 		</dict>
-		<string>Game Objects</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -13880,7 +13871,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1079</integer>
+					<integer>1078</integer>
 				</dict>
 			</array>
 		</dict>
@@ -13907,18 +13898,19 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1059</integer>
+					<integer>1067</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1060</integer>
+					<integer>1068</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1061</integer>
+					<integer>1080</integer>
 				</dict>
 			</array>
 		</dict>
+		<string>Layers</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -13941,7 +13933,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1077</integer>
+					<integer>1059</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -15196,7 +15188,7 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>1201</integer>
+					<integer>1060</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -15225,7 +15217,7 @@
 			<key>DocumentLocation</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>1207</integer>
+				<integer>1206</integer>
 			</dict>
 			<key>DomainIdentifier</key>
 			<dict>
@@ -15257,6 +15249,10 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
+					<integer>1201</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
 					<integer>1202</integer>
 				</dict>
 				<dict>
@@ -15266,10 +15262,6 @@
 				<dict>
 					<key>CF$UID</key>
 					<integer>1204</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
-					<integer>1205</integer>
 				</dict>
 			</array>
 		</dict>
@@ -15282,10 +15274,9 @@
 			<key>Identifier</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>1201</integer>
+				<integer>1060</integer>
 			</dict>
 		</dict>
-		<string>PlayerCar.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -15295,7 +15286,7 @@
 			<key>Identifier</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>1077</integer>
+				<integer>1059</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -15331,7 +15322,7 @@
 			<key>Identifier</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>1206</integer>
+				<integer>1205</integer>
 			</dict>
 		</dict>
 		<string>GridChaser</string>
@@ -15344,13 +15335,22 @@
 			<key>documentURL</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>432</integer>
+				<integer>1207</integer>
 			</dict>
 			<key>timestamp</key>
 			<dict>
 				<key>CF$UID</key>
 				<integer>0</integer>
 			</dict>
+		</dict>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>26</integer>
+			</dict>
+			<key>NS.string</key>
+			<string>file://localhost/Users/shervinghazazani/Games/GridChaser/GridChaser/Classes/Game%20Objects/PlayerCar.m</string>
 		</dict>
 		<dict>
 			<key>$class</key>
@@ -15397,10 +15397,10 @@
 				</dict>
 			</array>
 		</dict>
-		<real>338929707.64064199</real>
-		<string>{262, 1536}</string>
-		<string>{1733, 0}</string>
-		<string>-turnDirection:</string>
+		<real>338931645.81721801</real>
+		<string>{256, 1524}</string>
+		<string>{727, 0}</string>
+		<string>-dealloc</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
 			<key>$class</key>
@@ -15604,7 +15604,7 @@
 			<key>DocumentLocation</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>1207</integer>
+				<integer>1206</integer>
 			</dict>
 			<key>DomainIdentifier</key>
 			<dict>
@@ -15661,7 +15661,7 @@
 			<key>Identifier</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>1201</integer>
+				<integer>1060</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -15673,7 +15673,7 @@
 			<key>Identifier</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>1077</integer>
+				<integer>1059</integer>
 			</dict>
 		</dict>
 		<dict>
