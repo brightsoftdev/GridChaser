@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="16" tileheight="16" spacing="2" margin="2">
+  <image source="tmw_desert_spacing.png" width="146" height="110"/>
+ </tileset>
+ <tileset firstgid="49" name="Collision" tilewidth="16" tileheight="16" spacing="2" margin="2">
+  <image source="Collision.png" width="38" height="20"/>
+  <tile id="0">
+   <properties>
+    <property name="Collidable" value="False"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <objectgroup name="Objects" width="32" height="32">
+  <object name="SpawnPoint1" x="56" y="439"/>
+  <object name="SpawnPoint2" x="407" y="70"/>
+ </objectgroup>
+ <layer name="Collision" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztkDEKACAMxPom//84VweRglzjYQMH3UIa0YziveqnWP27+6Yz01blp/+f8dP9tF+JQz/tV+LQT/uVOPTTfiUO/bRfiUM/7VfS/Wd/1V7z/8wEv6hicQ==
+  </data>
+ </layer>
+ <layer name="Background" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztlz0KwCAMRnMNKwilXewPvf/tmsEhFANSNS34DQ+c8vTpYiCiMDiOmYzwGf/MrMxmwK74lw/7S78TjWruxWfmlfijaBQbdJbztL1Y9dc8Vv1L/D37l/jRH/3RH/3RH/3Rf7z+V0Ku3/Kc9+fzH9T/73Mq/pp31uL/MzI3J2WA/A==
+  </data>
+ </layer>
+</map>
