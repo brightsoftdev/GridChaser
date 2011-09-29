@@ -22,12 +22,12 @@
  </objectgroup>
  <layer name="Collision" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztkDEKACAMxPom//84VweRglzjYQMH3UIa0YziveqnWP27+6Yz01blp/+f8dP9tF+JQz/tV+LQT/uVOPTTfiUO/bRfiUM/7VfS/Wd/1V7z/8wEv6hicQ==
+   eJztj0EKACAMw/Ym//84rwqyi9RYaKCw00KqeAa0+Hc/xeo/3Td93b8f/Uoc+mm/Eod+2q/EoZ/2K3Hop/1KHPppvxKHftqvJP29//Xi55mkFXkZ
   </data>
  </layer>
  <layer name="Background" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztlz0KwCAMRnMNKwilXewPvf/tmsEhFANSNS34DQ+c8vTpYiCiMDiOmYzwGf/MrMxmwK74lw/7S78TjWruxWfmlfijaBQbdJbztL1Y9dc8Vv1L/D37l/jRH/3RH/3RH/3Rf7z+V0Ku3/Kc9+fzH9T/73Mq/pp31uL/MzI3J2WA/A==
+   eJztl7sOgCAMRfsbSELiY8FH/P+/k0GTmw5KBIvDHU7C1FtOuzSISGiMS3TGeMjvE4Mxo8qfErMhi8rHfqzBfAezKdkL/1BPz//Kj+AmVvCL9XDP9Pwt/Ofkf+k/J5/+6Z/+6Z/+6Z/+6d/a/36C77foen/+/yrf31zbTX7L+6tkz2vcXy05ALU1gsw=
   </data>
  </layer>
 </map>

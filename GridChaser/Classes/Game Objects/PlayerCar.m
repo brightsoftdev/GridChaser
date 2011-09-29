@@ -152,7 +152,6 @@
         default:
             break;
     }
-    
     return nextTileLocation;
 }
 
@@ -173,9 +172,7 @@
     }
     else {
         //Assume player is attempting to use their active ability
-        
         //active ability code;
-           
     }
         return YES;
 }
