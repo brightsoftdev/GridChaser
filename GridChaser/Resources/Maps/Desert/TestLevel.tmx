@@ -16,7 +16,7 @@
    </properties>
   </tile>
  </tileset>
- <objectgroup name="Objects" width="32" height="32">
+ <objectgroup name="Objects" width="32" height="32" visible="0">
   <object name="SpawnPoint1" x="56" y="439"/>
   <object name="SpawnPoint2" x="407" y="70"/>
  </objectgroup>

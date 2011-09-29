@@ -132,10 +132,10 @@
     float accelY = acceleration.y - ( (acceleration.y * kFilteringFactor) + (prevY * (1.0 - kFilteringFactor)) );
     float accelZ = acceleration.z - ( (acceleration.z * kFilteringFactor) + (prevZ * (1.0 - kFilteringFactor)) );
     
-    if (accelY > 0.25) {
+    if (accelY > 0.20) {
         [player turnDirection:kDirectionRight];
     }
-    else if(accelY < -0.25) {
+    else if(accelY < -0.20) {
         [player turnDirection:kDirectionLeft];
     }
     
