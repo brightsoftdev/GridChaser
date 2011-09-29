@@ -13,6 +13,7 @@
     float velocity;
     CharacterState state;
     id<MapDelegate> mapDelegate;
+    CGPoint tileCoordinate;
 }
 
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime;
@@ -22,5 +23,6 @@
 @property (nonatomic,assign) float velocity;
 @property (nonatomic,assign) CharacterState state;
 @property (nonatomic,assign) id<MapDelegate> mapDelegate;
+@property (nonatomic,readonly) CGPoint tileCoordinate;
 
 @end

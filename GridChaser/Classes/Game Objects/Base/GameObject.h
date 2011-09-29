@@ -14,7 +14,6 @@
 @interface GameObject : CCSprite {
     BOOL isActive;
     BOOL isTouched;
-    
 }
 
 @property (nonatomic,assign) BOOL isActive;

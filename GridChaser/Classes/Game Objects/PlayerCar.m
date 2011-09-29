@@ -40,7 +40,7 @@
 
 - (void)turnDirection:(playerDirection)newDirection
 {
-    CGPoint currentTileCoord = [mapDelegate tileCoordForPosition:self.position];
+    CGPoint currentTileCoord = self.tileCoordinate;
     
     if(!CGPointEqualToPoint(lastTileCoord, currentTileCoord)){
         switch (newDirection) {
@@ -129,8 +129,8 @@
 
 - (CGPoint)getNextTileCoordWithDirection:(playerDirection)dir
 {
-    CGPoint currentTileLocation = [mapDelegate tileCoordForPosition:self.position];
-    CGPoint nextTileLocation = currentTileLocation;
+    CGPoint currentTileCoord = self.tileCoordinate;
+    CGPoint nextTileLocation = currentTileCoord;
     
     switch (dir) {
         case kDirectionUp:

@@ -10,7 +10,7 @@
 
 @implementation GameCharacter
 
-@synthesize characterHealth,velocity,state,mapDelegate;
+@synthesize characterHealth,velocity,state,mapDelegate,tileCoordinate;
 
 - (id)init
 {
@@ -22,6 +22,11 @@
     }
     
     return self;
+}
+
+-(CGPoint) tileCoordinate {
+    CGPoint currentTileCoordinate = [mapDelegate tileCoordForPosition:self.position];
+    return currentTileCoordinate;
 }
 
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime
@@ -51,7 +56,7 @@
     //Check to see if path is valid
     if([mapDelegate isPathValid:path]) {
         //grab the next position from the path, get the center tile coordinate.
-        CGPoint currentTileCoord = [mapDelegate tileCoordForPosition:self.position];
+        CGPoint currentTileCoord = self.tileCoordinate;
         CGPoint nextTileCoord = CGPointFromString([path objectAtIndex:0]);
         CGPoint nextPosition = [mapDelegate centerPositionAt :nextTileCoord];
         

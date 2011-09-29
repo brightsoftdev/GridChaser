@@ -45,7 +45,8 @@
                 [player removeFromParentAndCleanup:YES];
             }
             else {
-                CGPoint posTileCoord = [mapDelegate tileCoordForPosition:self.position];
+                
+                CGPoint posTileCoord = self.tileCoordinate;
                 CGPoint playerTileCoord = [mapDelegate tileCoordForPosition:player.position];
                 
                 NSMutableArray *path = [mapDelegate getPathPointsFrom:posTileCoord to:playerTileCoord];
