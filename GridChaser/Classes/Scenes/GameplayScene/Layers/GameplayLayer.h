@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "AIDirector.h"
 #import "PlayerCar.h"
 #import "EnemyCar.h"
 #import "Marker.h"
 #import "Map.h"
 
 @interface GameplayLayer : CCLayer <GameplayLayerDelegate> {
+    AIDirector *director;
     PlayerCar *player;
-    EnemyCar *enemy;
     CCSpriteBatchNode *spriteBatchNode;
     Map *gameMap;
 }

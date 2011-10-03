@@ -74,7 +74,7 @@
 
 -(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
-    GameObject *marker;
+    GameObject *marker = nil;
     
     for (GameObject *tempObj in arrayOfGameObjects) {
         if(tempObj.tag == kMarkerTag) {
@@ -82,14 +82,18 @@
         }
     }
     
-    CGRect markerBoundingBox = [marker boundingBox];
-    CGRect boundingBox = [self boundingBox];
-    
-    if(CGRectIntersectsRect(boundingBox, markerBoundingBox)) {
-        [marker setVisible:NO];
-        [marker removeFromParentAndCleanup:YES];
-        [gameplayLayerDelegate addNewMarker];
+    if(marker != nil) {
+        CGRect markerBoundingBox = [marker boundingBox];
+        CGRect boundingBox = [self boundingBox];
+        
+        if(CGRectIntersectsRect(boundingBox, markerBoundingBox)) {
+            [marker setVisible:NO];
+            [marker removeFromParentAndCleanup:YES];
+            [gameplayLayerDelegate addGameObject:kGameObjectMarker];
+        }
     }
+    
+    
     
     switch (state) {
         case kStateIdle:
@@ -98,6 +102,12 @@
         case kStateMoving:
         {
             [self moveWithDirectionWithDeltaTime:deltaTime];
+            break;
+        }
+            
+        case kStateJumping:
+        {
+            
         }
     }
 }

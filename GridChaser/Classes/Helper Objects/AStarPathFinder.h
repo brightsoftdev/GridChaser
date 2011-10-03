@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 #import "Constants.h"
 
-@interface AStarPathFinder : CCLayer {
+@interface AStarPathFinder : NSObject {
     CCTMXTiledMap *tiledMap;
     CCTMXLayer *collisionLayer;
     NSMutableSet *openNodes;

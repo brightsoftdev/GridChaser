@@ -77,6 +77,12 @@
     }
 }
 
+-(void) setState:(CharacterState)state 
+{
+    //Based on state, run the required animations.
+    //Animations need to run here follow by changing of states.
+}
+
 -(void) updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
      //OVERLOAD ME

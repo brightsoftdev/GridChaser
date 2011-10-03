@@ -25,7 +25,7 @@
 
 -(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
-    //CCLOG(@"updateWithDeltaTime should be overridden");
+    //CCLOG(@"updateWithDeltaTime should be overridden"); 
 }
 
 @end

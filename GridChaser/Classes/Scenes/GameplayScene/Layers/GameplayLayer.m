@@ -63,16 +63,15 @@
         
         gameMap = [[Map alloc] init];
         
+        director = [[AIDirector alloc] init];
+        director.gameplayLayerDelegate = self;
+        
         //Initialize Player and Enemy
         player = [[PlayerCar alloc] initWithSpriteFrameName:kPlayerCarImage];
         player.mapDelegate = gameMap;
         player.gameplayLayerDelegate = self;
         player.state = kStateMoving;
         player.tag = kPlayerCarTag;
-
-        enemy = [[EnemyCar alloc] initWithSpriteFrameName:kEnemyCarImage];
-        enemy.mapDelegate = gameMap;
-        enemy.state = kStateMoving;
         
         CCTMXObjectGroup *objects = [gameMap objectGroupNamed:kMapObjectLayer];
         NSAssert(objects != nil, @"Objects group not found");
@@ -83,16 +82,9 @@
         int y = [[spawnPoint valueForKey:@"y"] intValue];
         player.position = CGPointMake(x, y);
         
-        NSMutableDictionary *spawnPoint2 = [objects objectNamed:kMapObjectSpawnPoint2];
-        NSAssert(spawnPoint2 != nil, @"SpawnPoint object not found");
-        x = [[spawnPoint2 valueForKey:@"x"] intValue];
-        y = [[spawnPoint2 valueForKey:@"y"] intValue];
-        enemy.position = CGPointMake(x, y);
-        
-        [self addNewMarker];
+        [self addGameObject:kGameObjectMarker];
         
         [spriteBatchNode addChild:player z:kGameObjectZValue tag:kPlayerCarTag];
-        [spriteBatchNode addChild:enemy z:kGameObjectZValue tag:kEnemyCarTag];
         [self addChild:spriteBatchNode z:2];
         [self addChild:gameMap z:1];
         
@@ -107,6 +99,8 @@
     for (GameCharacter *tempChar in listOfGameObjects) {
         [tempChar updateWithDeltaTime:deltaTime andArrayOfGameObjects:listOfGameObjects];
     }
+    
+    [director updateWithDeltaTime:deltaTime andArrayOfGameObjects:listOfGameObjects];
     
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     
@@ -139,29 +133,41 @@
         [player turnDirection:kDirectionLeft];
     }
     
-    CCLOG(@"accelY: %f",accelY);
+    //CCLOG(@"accelY: %f",accelY);
     
     prevX = accelX;
     prevY = accelY;
     prevZ = accelZ;
 }
 
--(void) addNewMarker
+- (void) addGameObject:(GameObjectType)type 
 {
-    CGPoint newMarkerTileCoord = ccp(-1, -1);
-    while ([gameMap isCollidableWithTileCoord:newMarkerTileCoord]) {
-        int x = arc4random() % (int)gameMap.mapSize.width;
-        int y = arc4random() % (int)gameMap.mapSize.height;
-        newMarkerTileCoord = ccp(x, y);
+    if(type == kGameObjectMarker) {
+        CGPoint newMarkerTileCoord = ccp(-1, -1);
+        while ([gameMap isCollidableWithTileCoord:newMarkerTileCoord]) {
+            int x = arc4random() % (int)gameMap.mapSize.width;
+            int y = arc4random() % (int)gameMap.mapSize.height;
+            newMarkerTileCoord = ccp(x, y);
+        }
+        newMarkerTileCoord = [gameMap.collisionLayer positionAt:newMarkerTileCoord];
+        newMarkerTileCoord.x = newMarkerTileCoord.x + gameMap.tileSize.width * 0.5;
+        newMarkerTileCoord.y = newMarkerTileCoord.y + gameMap.tileSize.height * 0.5;
+        
+        Marker *newMarker = [Marker spriteWithSpriteFrameName:kRedBuildingImage];
+        newMarker.position = newMarkerTileCoord;
+        newMarker.tag = kMarkerTag;
+        
+        [spriteBatchNode addChild:newMarker];
     }
-    newMarkerTileCoord = [gameMap.collisionLayer positionAt:newMarkerTileCoord];
-    newMarkerTileCoord.x = newMarkerTileCoord.x + gameMap.tileSize.width * 0.5;
-    newMarkerTileCoord.y = newMarkerTileCoord.y + gameMap.tileSize.height * 0.5;
-    
-    Marker *newMarker = [Marker spriteWithSpriteFrameName:kRedBuildingImage];
-    newMarker.position = newMarkerTileCoord;
-    newMarker.tag = kMarkerTag;
-    
-    [spriteBatchNode addChild:newMarker];
+    else if(type == kGameObjectEnemyCar) {
+        EnemyCar *enemy = [EnemyCar spriteWithSpriteFrameName:kEnemyCarImage];
+        enemy.mapDelegate = gameMap;
+        enemy.state = kStateMoving;
+        
+        CGPoint spawnPoint = [gameMap centerPositionAt:CGPointMake(25, 4)];
+        enemy.position = spawnPoint;
+        
+        [spriteBatchNode addChild:enemy z:kGameObjectZValue tag:kEnemyCarTag];
+    }
 }
 @end

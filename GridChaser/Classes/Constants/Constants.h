@@ -48,13 +48,20 @@
 #pragma CharacterStates
 typedef enum {
     kStateIdle,
-    kStateMoving
+    kStateMoving,
+    kStateJumping
 } CharacterState; // 1
+
+#pragma GameObjectTypes
+typedef enum {
+    kGameObjectMarker,
+    kGameObjectEnemyCar
+} GameObjectType;
 
 #pragma mark -
 #pragma mark GameplayLayerDelegate
 @protocol GameplayLayerDelegate
-- (void) addNewMarker;
+- (void) addGameObject:(GameObjectType)type;
 @end
 
 #pragma mark - 

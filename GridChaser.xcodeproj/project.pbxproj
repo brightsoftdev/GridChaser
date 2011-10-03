@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A96DA7501415499E008AF043 /* Marker.m in Sources */ = {isa = PBXBuildFile; fileRef = A96DA74F1415499D008AF043 /* Marker.m */; };
+		A97512CB143787D2008F3CB2 /* AIDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = A97512CA143787D2008F3CB2 /* AIDirector.m */; };
 		A99B7912141946090045DE9C /* Collision.png in Resources */ = {isa = PBXBuildFile; fileRef = A99B790F141946090045DE9C /* Collision.png */; };
 		A99B7913141946090045DE9C /* TestLevel.tmx in Resources */ = {isa = PBXBuildFile; fileRef = A99B7910141946090045DE9C /* TestLevel.tmx */; };
 		A99B7914141946090045DE9C /* tmw_desert_spacing.png in Resources */ = {isa = PBXBuildFile; fileRef = A99B7911141946090045DE9C /* tmw_desert_spacing.png */; };
@@ -145,6 +146,8 @@
 /* Begin PBXFileReference section */
 		A96DA74E1415499D008AF043 /* Marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Marker.h; sourceTree = "<group>"; };
 		A96DA74F1415499D008AF043 /* Marker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Marker.m; sourceTree = "<group>"; };
+		A97512C9143787D2008F3CB2 /* AIDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIDirector.h; sourceTree = "<group>"; };
+		A97512CA143787D2008F3CB2 /* AIDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIDirector.m; sourceTree = "<group>"; };
 		A99B790F141946090045DE9C /* Collision.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Collision.png; sourceTree = "<group>"; };
 		A99B7910141946090045DE9C /* TestLevel.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLevel.tmx; sourceTree = "<group>"; };
 		A99B7911141946090045DE9C /* tmw_desert_spacing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tmw_desert_spacing.png; sourceTree = "<group>"; };
@@ -959,6 +962,8 @@
 			children = (
 				A9DDE7D8140D73040045E06E /* AStarPathFinder.h */,
 				A9DDE7D9140D73040045E06E /* AStarPathFinder.m */,
+				A97512C9143787D2008F3CB2 /* AIDirector.h */,
+				A97512CA143787D2008F3CB2 /* AIDirector.m */,
 			);
 			path = "Helper Objects";
 			sourceTree = "<group>";
@@ -1145,6 +1150,7 @@
 				A9DDE7CE140C253F0045E06E /* Map.m in Sources */,
 				A9DDE7DA140D73040045E06E /* AStarPathFinder.m in Sources */,
 				A96DA7501415499E008AF043 /* Marker.m in Sources */,
+				A97512CB143787D2008F3CB2 /* AIDirector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
