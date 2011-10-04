@@ -1,16 +1,16 @@
-*.xcbkptlist,
-*.xcuserstate,
-*.swp,
-*~.nib,
+*.xcbkptlist
+*.xcuserstate
+*.swp
+*~.nib
 
 build/,
 
-*.pbxuser,
-*.perspective,
-*.perspectivev3,
+*.pbxuser
+*.perspective
+*.perspectivev3
 
-GridChaser.xcodeproj/xcuserdata/*,
-GridChaser.xcodeproj/project.xcworkspace/xcuserdata/*,
+GridChaser.xcodeproj/xcuserdata/*
+GridChaser.xcodeproj/project.xcworkspace/xcuserdata/*
 
-*.mode1v3,
+*.mode1v3
 *.mode2v3
