@@ -11,7 +11,7 @@
 @interface AStarPathFinder (Private)
     - (AStarNode *)lowestCostNode;
     - (AStarNode *) findShortestPathFrom:(CGPoint)origin to:(CGPoint)destination;
-    - (NSArray*) getPathNodesFrom:(CGPoint)origin to:(CGPoint)destination;
+    
 @end
 
 @implementation AStarPathFinder
@@ -169,13 +169,12 @@ static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
 {
     CGPoint tileCoord;
     
-    for(int i=0; i < [path count];i++) {
-        tileCoord = CGPointFromString([path objectAtIndex:i]);
+    for (NSString *string in path) {
+        tileCoord = CGPointFromString(string);
         if([self isCollidableWithTileCoord:tileCoord]) {
             return NO;
         }
     }
-    
     return YES;
 }
 
@@ -210,8 +209,8 @@ static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
 -(id) initWithPoint:(CGPoint)newPoint
 {
     self.point = newPoint;
-    x = newPoint.x;
-    y = newPoint.y;
+//    x = newPoint.x;
+//    y = newPoint.y;
     
     return self;
 }
@@ -228,18 +227,23 @@ static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
 
 - (NSUInteger) hash
 {
+    int x = (int)point.x;
+    int y = (int)point.y;
     return (x << 16) | (y & 0xFFFF);
 }
 
 - (BOOL)isEqual:(id)otherObject
 {
+    
     if (![otherObject isKindOfClass:[self class]])
     {
         return NO;
     }
     
+    
     AStarNode *otherNode = (AStarNode*) otherObject;
-    if (point.x == otherNode->point.x && point.y == otherNode->point.y)
+    
+    if (point.x == otherNode.point.x && point.y == otherNode.point.y)
     {
         return YES;
     }

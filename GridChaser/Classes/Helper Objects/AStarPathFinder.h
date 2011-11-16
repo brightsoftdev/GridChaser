@@ -27,7 +27,7 @@
 @end
 
 @interface AStarNode : NSObject {
-    int x,y;
+    //int x,y;
     CGPoint point;
     AStarNode *parent;
     int f;

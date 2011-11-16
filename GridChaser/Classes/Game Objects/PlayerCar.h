@@ -12,25 +12,25 @@
 #import "Marker.h"
 #import "Constants.h"
 
-#pragma CharacterDirection
+#pragma TurnAttempt
 typedef enum {
-    kDirectionUp = 1,
-    kDirectionRight = 2,
-    kDirectionDown = 3,
-    kDirectionLeft = 4
-} playerDirection; 
+    kTurnAttemptSuccess,
+    kTurnAttemptFailed,
+    kTurnNotAttempted
+} turnAttempt;
 
 @interface PlayerCar : GameCharacter <CCTargetedTouchDelegate> {
-    playerDirection direction;
-    CGPoint lastTileCoord;
+    CGPoint lastTurnedTileCoord;
+    BOOL hasTurnedCorrectly;
+    turnAttempt attemptedTurn;
     id<GameplayLayerDelegate> gameplayLayerDelegate;
 }
 
 -(void)moveWithDirectionWithDeltaTime:(ccTime)deltaTime;
--(void)turnDirection:(playerDirection)newDirection;
 
-@property (nonatomic,readwrite,assign) CGPoint lastTileCoord;
+@property (nonatomic,readwrite,assign) CGPoint lastTurnedTileCoord;
+@property (nonatomic,readwrite,assign) turnAttempt attemptedTurn;
+@property (nonatomic,readwrite,assign) BOOL hasTurnedCorrectly;
 @property (nonatomic,readwrite,assign) id<GameplayLayerDelegate> gameplayLayerDelegate;
-@property (nonatomic,readwrite,assign) playerDirection direction;
 
 @end

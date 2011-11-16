@@ -9,6 +9,10 @@
 #ifndef GridChaser_Constants_h
 #define GridChaser_Constants_h
 
+#ifndef GRID_CHASER_DEBUG_MODE
+#define GRID_CHASER_DEBUG_MODE 0
+#endif
+
 #define kPixelToMetresRatio 32.0 //Pixel to Meters ratio for Box2D
 
 #define kPlayerCarTag 1

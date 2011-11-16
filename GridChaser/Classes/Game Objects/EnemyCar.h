@@ -13,7 +13,7 @@
 #import "PlayerCar.h"
 
 @interface EnemyCar : GameCharacter {
-    
+    CGPoint lastKnownPlayerCoord;
 }
 
 @end

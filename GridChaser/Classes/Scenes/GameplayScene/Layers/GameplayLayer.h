@@ -19,6 +19,16 @@
     PlayerCar *player;
     CCSpriteBatchNode *spriteBatchNode;
     Map *gameMap;
+    
+    CCMenuItem *leftButtonArrow;
+    CCMenuItem *rightButtonArrow;
+    
+    CCMenu *guiMenu;
+    
+    
+    #if CC_ENABLE_PROFILERS
+    CCProfilingTimer *updateLoopProfiler;
+    #endif
 }
 
 +(CCScene *)scene;

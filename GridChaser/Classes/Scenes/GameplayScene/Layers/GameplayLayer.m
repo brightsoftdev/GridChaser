@@ -11,7 +11,6 @@
 #import "FileConstants.h"
 #import "GameScene.h"
 
-
 @implementation GameplayLayer
 
 @synthesize gameMap;
@@ -52,7 +51,11 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
         self.isTouchEnabled = YES;
-        self.isAccelerometerEnabled = YES;
+        //self.isAccelerometerEnabled = YES;
+        
+        #if CC_ENABLE_PROFILERS
+        updateLoopProfiler = [[CCProfiler timerWithName:@"updateProfiler" andInstance:self] retain];
+        #endif
         
         [[UIAccelerometer sharedAccelerometer] setUpdateInterval: (1.0 / 60)];
         
@@ -82,11 +85,25 @@
         int y = [[spawnPoint valueForKey:@"y"] intValue];
         player.position = CGPointMake(x, y);
         
+        CGSize winSize = [[CCDirector sharedDirector] winSize];
+        
+        leftButtonArrow = [CCMenuItemImage itemFromNormalImage:kGuiLeftArrow selectedImage:kGuiLeftArrow 
+                                                        target:self selector:@selector(leftArrowButtonTapped:)];
+        leftButtonArrow.position = ccp(0+20,winSize.height * 0.5);
+        
+        rightButtonArrow = [CCMenuItemImage itemFromNormalImage:kGuiRightArrow selectedImage:kGuiRightArrow 
+                                                         target:self selector:@selector(rightArrowButtonTapped:)];
+        rightButtonArrow.position = ccp(winSize.width - 20, winSize.height * 0.5);
+        
+        guiMenu = [CCMenu menuWithItems:leftButtonArrow,rightButtonArrow, nil];
+        guiMenu.position = CGPointZero;
+        
         [self addGameObject:kGameObjectMarker];
         
         [spriteBatchNode addChild:player z:kGameObjectZValue tag:kPlayerCarTag];
         [self addChild:spriteBatchNode z:2];
         [self addChild:gameMap z:1];
+        [self addChild:guiMenu z:3];
         
         [self scheduleUpdate];
     }
@@ -95,6 +112,10 @@
 
 -(void) update:(ccTime)deltaTime 
 {
+    #if CC_ENABLE_PROFILERS
+        CCProfilingBeginTimingBlock(updateLoopProfiler);
+    #endif
+    
     CCArray *listOfGameObjects = [spriteBatchNode children];
     for (GameCharacter *tempChar in listOfGameObjects) {
         [tempChar updateWithDeltaTime:deltaTime andArrayOfGameObjects:listOfGameObjects];
@@ -116,6 +137,11 @@
     CGPoint centerOfView = ccp(winSize.width/2, winSize.height/2);
     CGPoint viewPoint = ccpSub(centerOfView,actualPosition);
     self.position = viewPoint;
+    guiMenu.position = ccpNeg(viewPoint);    
+    
+    #if CC_ENABLE_PROFILERS
+        CCProfilingEndTimingBlock(updateLoopProfiler);
+    #endif
 }
 
 #define kFilteringFactor 0.1
@@ -127,12 +153,11 @@
     float accelZ = acceleration.z - ( (acceleration.z * kFilteringFactor) + (prevZ * (1.0 - kFilteringFactor)) );
     
     if (accelY > 0.20) {
-        [player turnDirection:kDirectionRight];
+        player.direction = kDirectionRight;
     }
     else if(accelY < -0.20) {
-        [player turnDirection:kDirectionLeft];
-    }
-    
+        player.direction = kDirectionLeft;
+    }    
     //CCLOG(@"accelY: %f",accelY);
     
     prevX = accelX;
@@ -170,4 +195,19 @@
         [spriteBatchNode addChild:enemy z:kGameObjectZValue tag:kEnemyCarTag];
     }
 }
+
+- (void) leftArrowButtonTapped:(id)sender {
+    player.direction = kDirectionLeft;
+    #if GRID_CHASER_DEBUG_MODE
+        CCLOG(@"Tapped Left!");
+    #endif
+}
+
+- (void) rightArrowButtonTapped:(id)sender {
+    player.direction = kDirectionRight;
+    #if GRID_CHASER_DEBUG_MODE
+        CCLOG(@"Tapped Right");
+    #endif
+}
+
 @end

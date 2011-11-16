@@ -34,7 +34,9 @@
     elapsedTime += deltaTime;
     
     if ((int)elapsedTime % 30 == 0 && !hasSpawned) {
-        CCLOG(@"Spawn a new car at: %f",elapsedTime);
+        #if GRID_CHASER_DEBUG_MODE
+            CCLOG(@"Spawn a new car at: %f",elapsedTime);
+        #endif
         [gameplayLayerDelegate addGameObject:kGameObjectEnemyCar];
         hasSpawned = YES;
     }

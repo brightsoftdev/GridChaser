@@ -33,13 +33,14 @@
 #elif __arm__
 #define GAME_AUTOROTATION kGameAutorotationNone
 
-
 // Ignore this value on Mac
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 #else
 #error(unknown architecture)
 #endif
+
+#define GRID_CHASER_DEBUG_MODE 1
 
 #endif // __GAME_CONFIG_H
 

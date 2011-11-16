@@ -8,19 +8,34 @@
 
 #import "GameObject.h"
 
+#pragma CharacterDirection
+typedef enum {
+    kDirectionUp = 0,
+    kDirectionRight = 1,
+    kDirectionDown = 2,
+    kDirectionLeft = 3
+} characterDirection; 
+
 @interface GameCharacter : GameObject {
     int characterHealth;
+    characterDirection direction;
     float velocity;
+    float acceleration;
     CharacterState state;
     id<MapDelegate> mapDelegate;
     CGPoint tileCoordinate;
 }
 
+-(id) initWithDirection:(characterDirection) startingDirection;
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime;
+-(void) updateDirectionWithTileCoord:(CGPoint) tileCoord;
+-(void)updateSprite;
 -(void) moveToPositionWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;
 
 @property (nonatomic,assign) int characterHealth;
+@property (nonatomic,assign) characterDirection direction;
 @property (nonatomic,assign) float velocity;
+@property (nonatomic,assign) float acceleration;
 @property (nonatomic,assign) CharacterState state;
 @property (nonatomic,assign) id<MapDelegate> mapDelegate;
 @property (nonatomic,readonly) CGPoint tileCoordinate;

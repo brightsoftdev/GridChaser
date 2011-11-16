@@ -10,10 +10,19 @@
 #define GridChaser_FileConstants_h
 
 #pragma mark -
+#pragma mark GUI
+
+#define kGuiLeftArrow @"Left Arrow.png"
+#define kGuiRightArrow @"Right Arrow.png"
+
+#pragma mark -
 #pragma mark Cars
 
 #define kPlayerCarImage @"CopCar-GTA2.png"
+#define kPlayerCarVerticalImage @"Vertical-CopCar.png"
+
 #define kEnemyCarImage @"Morton-GTA2.png"
+#define kEnemyCarVerticalImage @"Vertical-Morton2.png"
 
 #pragma mark -
 #pragma mark Buildings
