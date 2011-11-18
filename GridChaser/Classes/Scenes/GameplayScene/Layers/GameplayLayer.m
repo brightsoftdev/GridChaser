@@ -87,11 +87,11 @@
         
         CGSize winSize = [[CCDirector sharedDirector] winSize];
         
-        leftButtonArrow = [CCMenuItemImage itemFromNormalImage:kGuiLeftArrow selectedImage:kGuiLeftArrow 
+        leftButtonArrow = [CCMenuItemImage itemFromNormalImage:kGUILeftArrow2 selectedImage:kGUILeftArrow2 
                                                         target:self selector:@selector(leftArrowButtonTapped:)];
         leftButtonArrow.position = ccp(0+20,winSize.height * 0.5);
         
-        rightButtonArrow = [CCMenuItemImage itemFromNormalImage:kGuiRightArrow selectedImage:kGuiRightArrow 
+        rightButtonArrow = [CCMenuItemImage itemFromNormalImage:kGUIRightArrow2 selectedImage:kGUIRightArrow2 
                                                          target:self selector:@selector(rightArrowButtonTapped:)];
         rightButtonArrow.position = ccp(winSize.width - 20, winSize.height * 0.5);
         

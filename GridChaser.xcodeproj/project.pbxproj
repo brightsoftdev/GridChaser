@@ -143,6 +143,8 @@
 		A9BEE85A14097B5F00AF679C /* Morton-GTA2.png in Resources */ = {isa = PBXBuildFile; fileRef = A9BEE85214097B5F00AF679C /* Morton-GTA2.png */; };
 		A9BEE85B14097B5F00AF679C /* Sprites.png in Resources */ = {isa = PBXBuildFile; fileRef = A9BEE85314097B5F00AF679C /* Sprites.png */; };
 		A9BEE85D14097B5F00AF679C /* Sprites.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9BEE85714097B5F00AF679C /* Sprites.plist */; };
+		A9C281FB14761D16007ED445 /* Left Arrow2.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C281F914761D16007ED445 /* Left Arrow2.png */; };
+		A9C281FC14761D16007ED445 /* Right Arrow2.png in Resources */ = {isa = PBXBuildFile; fileRef = A9C281FA14761D16007ED445 /* Right Arrow2.png */; };
 		A9DDE7CE140C253F0045E06E /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDE7CD140C253F0045E06E /* Map.m */; };
 		A9DDE7DA140D73040045E06E /* AStarPathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDE7D9140D73040045E06E /* AStarPathFinder.m */; };
 /* End PBXBuildFile section */
@@ -413,6 +415,8 @@
 		A9BEE85214097B5F00AF679C /* Morton-GTA2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Morton-GTA2.png"; sourceTree = "<group>"; };
 		A9BEE85314097B5F00AF679C /* Sprites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sprites.png; sourceTree = "<group>"; };
 		A9BEE85714097B5F00AF679C /* Sprites.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Sprites.plist; sourceTree = "<group>"; };
+		A9C281F914761D16007ED445 /* Left Arrow2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Left Arrow2.png"; sourceTree = "<group>"; };
+		A9C281FA14761D16007ED445 /* Right Arrow2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Right Arrow2.png"; sourceTree = "<group>"; };
 		A9DDE7CC140C253F0045E06E /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		A9DDE7CD140C253F0045E06E /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
 		A9DDE7D8140D73040045E06E /* AStarPathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AStarPathFinder.h; sourceTree = "<group>"; };
@@ -441,6 +445,8 @@
 		A90F42491464E50D00009465 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				A9C281F914761D16007ED445 /* Left Arrow2.png */,
+				A9C281FA14761D16007ED445 /* Right Arrow2.png */,
 				A90F424A1464E50D00009465 /* Left Arrow.png */,
 				A90F424B1464E50D00009465 /* Right Arrow.png */,
 			);
@@ -1061,6 +1067,8 @@
 				A90F424D1464E50D00009465 /* Right Arrow.png in Resources */,
 				A99F5AFE146F2F780067DF9C /* Vertical-CopCar.png in Resources */,
 				A99F5AFF146F2F780067DF9C /* Vertical-Morton2.png in Resources */,
+				A9C281FB14761D16007ED445 /* Left Arrow2.png in Resources */,
+				A9C281FC14761D16007ED445 /* Right Arrow2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
