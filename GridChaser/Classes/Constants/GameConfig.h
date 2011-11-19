@@ -40,7 +40,5 @@
 #error(unknown architecture)
 #endif
 
-#define GRID_CHASER_DEBUG_MODE 1
-
 #endif // __GAME_CONFIG_H
 

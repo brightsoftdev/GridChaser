@@ -59,12 +59,17 @@
 
 -(void) updateDirectionWithTileCoord:(CGPoint) tileCoord
 {
-    CGPoint tileCoordSub = ccpSub(self.tileCoordinate, tileCoord);
+    CGPoint tileCoordSub = ccpSub(tileCoord,self.tileCoordinate );
+    #if GRID_CHASER_DEBUG_MODE
+        CCLOG(@"TileCoordSub is %@ - %@ = %@",NSStringFromCGPoint(tileCoord),
+              NSStringFromCGPoint(self.tileCoordinate),
+              NSStringFromCGPoint(tileCoord));
+    #endif
     
-    if(tileCoordSub.y == 1) {
+    if(tileCoordSub.y == -1) {
         direction = kDirectionUp;
     }
-    else if(tileCoordSub.y == -1) {
+    else if(tileCoordSub.y == 1) {
         direction = kDirectionDown;
     }
     else if(tileCoordSub.x == 1) {

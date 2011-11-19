@@ -41,6 +41,19 @@ static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
         int x = adjacentTiles[i][0];
         int y = adjacentTiles[i][1];
         
+        if (self.direction == kDirectionDown  && y == -1) {
+            continue;
+        }
+        else if(self.direction ==  kDirectionUp && y == 1) {
+            continue;
+        }
+        else if(self.direction == kDirectionRight && x == -1) {
+            continue;
+        }
+        else if(self.direction == kDirectionLeft && x == 1) {
+            continue;
+        }
+        
         CGPoint adjacentTile = ccp(currentTile.x + x, currentTile.y + y);
         
         if (![mapDelegate isCollidableWithTileCoord:adjacentTile]) {
@@ -104,24 +117,24 @@ static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
 
 -(void) updateSprite
 {
-    if (direction == 0) {
+    if (direction == kDirectionUp) {
         [self setDisplayFrame:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:kEnemyCarVerticalImage]];
         self.flipY = NO;
     }
-    else if(direction == 1) {
+    else if(direction == kDirectionRight) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:kEnemyCarImage];
         [self setDisplayFrame:frame];
-        self.flipX = NO;
+        self.flipX = YES;
     }
-    else if(direction == 2) {
+    else if(direction == kDirectionDown) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:kEnemyCarVerticalImage];
         [self setDisplayFrame:frame];
         self.flipY = YES;
     }
-    else if(direction == 3) {
+    else if(direction == kDirectionLeft) {
         CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:kEnemyCarImage];
         [self setDisplayFrame:frame];
-        self.flipX = YES;
+        self.flipX = NO;
     }
 }
 @end
