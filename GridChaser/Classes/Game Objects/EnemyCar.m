@@ -13,14 +13,12 @@
 
 #define kBaseVelocity 40
 
-static const int numAdjacentTiles = 4;
-static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
-
 -(id)init
 {
     if(self = [super init]) {
         velocity = kBaseVelocity;
         acceleration = 5;
+        topSpeed = 100;
     }
     
     return self;

@@ -28,6 +28,7 @@
         attemptedTurn = kTurnNotAttempted;
         velocity = kBaseVelocity;
         acceleration = 20;
+        topSpeed = 100;
         direction = kDirectionRight;
     }
     return self;

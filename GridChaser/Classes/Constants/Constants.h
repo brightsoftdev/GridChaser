@@ -49,18 +49,25 @@
 #define kMapObjectSpawnPoint1 @"SpawnPoint1"
 #define kMapObjectSpawnPoint2 @"SpawnPoint2"
 
-#pragma CharacterStates
+#pragma mark -
+#pragma mark CharacterStates
 typedef enum {
     kStateIdle,
     kStateMoving,
     kStateJumping
 } CharacterState; // 1
 
-#pragma GameObjectTypes
+#pragma mark -
+#pragma mark GameObjectTypes
 typedef enum {
     kGameObjectMarker,
     kGameObjectEnemyCar
 } GameObjectType;
+
+#pragma mark -
+#pragma mark AdjacentTiles
+static const int numAdjacentTiles = 4;
+static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
 
 #pragma mark -
 #pragma mark GameplayLayerDelegate

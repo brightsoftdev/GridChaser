@@ -8,7 +8,8 @@
 
 #import "GameObject.h"
 
-#pragma CharacterDirection
+#pragma mark -
+#pragma mark CharacterDirection
 typedef enum {
     kDirectionUp = 0,
     kDirectionRight = 1,
@@ -21,6 +22,7 @@ typedef enum {
     characterDirection direction;
     float velocity;
     float acceleration;
+    float topSpeed;
     CharacterState state;
     id<MapDelegate> mapDelegate;
     CGPoint tileCoordinate;
@@ -36,6 +38,7 @@ typedef enum {
 @property (nonatomic,assign) characterDirection direction;
 @property (nonatomic,assign) float velocity;
 @property (nonatomic,assign) float acceleration;
+@property (nonatomic,assign) float topSpeed;
 @property (nonatomic,assign) CharacterState state;
 @property (nonatomic,assign) id<MapDelegate> mapDelegate;
 @property (nonatomic,readonly) CGPoint tileCoordinate;

@@ -10,7 +10,7 @@
 
 @implementation GameCharacter
 
-@synthesize characterHealth,direction,velocity,acceleration,state,mapDelegate,tileCoordinate;
+@synthesize characterHealth,direction,velocity,acceleration,topSpeed,state,mapDelegate,tileCoordinate;
 
 - (id)initWithDirection: (characterDirection) startingDirection
 {
@@ -19,6 +19,7 @@
         velocity = 40;
         direction = startingDirection;
         acceleration = 10;
+        topSpeed = 125;
         characterHealth = 100;
         state = kStateIdle;
     }
@@ -122,7 +123,21 @@
 
 -(void) updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
-    velocity = velocity + acceleration * deltaTime;
+    float newVelocity = velocity + acceleration * deltaTime;
+    #if GRID_CHASER_DEBUG_MODE
+        CCLOG(@"Velocity: %f",newVelocity);
+    #endif
+    
+    //velocity = newVelocity;
+    
+    if (newVelocity > topSpeed) {
+        velocity = topSpeed;
+    }
+    else {
+        velocity = newVelocity;
+    }
+     
+
 }
 
 @end

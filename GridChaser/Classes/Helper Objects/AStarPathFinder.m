@@ -16,10 +16,6 @@
 
 @implementation AStarPathFinder
 
-static const int numAdjacentTiles = 4;
-static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
-
-
 - (id)initWithTiledMap:(CCTMXTiledMap *)map withCollisionLayer:(CCTMXLayer*)layer
 {
     self = [super init];
