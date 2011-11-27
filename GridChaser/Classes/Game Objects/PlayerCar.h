@@ -12,6 +12,8 @@
 #import "Marker.h"
 #import "Constants.h"
 
+#define kTurnLimit 2
+
 #pragma TurnAttempt
 typedef enum {
     kTurnAttemptSuccess,

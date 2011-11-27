@@ -10,7 +10,7 @@
 
 @interface PlayerCar()
 
--(CGPoint)getNextTileCoordWithDirection:(characterDirection)dir;
+- (CGPoint)getNextTileCoordWithCurrentTileCoord:(CGPoint)tileCoord andDirection:(characterDirection)dir;
 
 @end
 
@@ -50,44 +50,57 @@
 #pragma TurnDirection
 - (void)setDirection:(characterDirection)newDirection
 {
-    CGPoint currentTileCoord = self.tileCoordinate;
-    
-    if(!CGPointEqualToPoint(lastTurnedTileCoord, currentTileCoord)){
-        switch (newDirection) {
-            case kDirectionLeft:
-                if(direction == 0) newDirection = 3;
-                else {
-                    newDirection = direction - 1; 
-                }
-                break;
-                
-            case kDirectionRight:
-                if(direction == 3) newDirection = 0;
-                else {
-                    newDirection = direction + 1;
-                }
-                break;
-                
-            default:
-                break;
-        }
-        
-        CGPoint nextTileCoord = [self getNextTileCoordWithDirection:newDirection];
-        
-        if (![mapDelegate isCollidableWithTileCoord:nextTileCoord]) {
-            direction = newDirection;
-            [self updateSprite];
-            lastTurnedTileCoord = currentTileCoord;
-            hasTurnedCorrectly = YES;
-            if (self.state == kStateMoving) {
-                attemptedTurn = kTurnAttemptSuccess;
+    switch (newDirection) {
+        case kDirectionLeft:
+            if (direction == 0) newDirection = 3;
+            else {
+                newDirection = direction - 1;
             }
+            break;
+            
+        case kDirectionRight:
+            if (direction == 3) newDirection = 0;
+            else {
+                newDirection = direction + 1;
+            }
+            break;
+        default:
+            break;
+    }
+    
+    CGPoint nextTileCoord = self.tileCoordinate;
+    BOOL isNextTileCollidable = YES;
+    int i = 1;
+    
+    while (i <= kTurnLimit) {
+        nextTileCoord = [self getNextTileCoordWithCurrentTileCoord:nextTileCoord andDirection:newDirection];
+        isNextTileCollidable = [mapDelegate isCollidableWithTileCoord:nextTileCoord];
+        
+        if (!isNextTileCollidable) {
+            break;
         }
         else {
-            if (self.state == kStateMoving) {
-                attemptedTurn = kTurnAttemptFailed;
-            }
+            nextTileCoord = [self getNextTileCoordWithCurrentTileCoord:self.tileCoordinate andDirection:direction]; 
+            i++;
         }
+    }
+    
+    if (isNextTileCollidable) {
+        //failed turn
+        if (self.state == kStateMoving) {
+            attemptedTurn = kTurnAttemptFailed;
+        }
+    }
+    else {
+        //direction = newDirection;
+        targetTile = nextTileCoord;
+        //[self updateSprite];
+        lastTurnedTileCoord = self.tileCoordinate;
+        hasTurnedCorrectly = YES;
+        if (self.state == kStateMoving) {
+            attemptedTurn = kTurnAttemptSuccess;
+        }
+
     }
 }
 
@@ -114,12 +127,10 @@
         }
     }
     
-    CGPoint nextTileCoord = [self getNextTileCoordWithDirection:direction];
-    
     switch (state) {
         case kStateIdle:
         {
-            if (![mapDelegate isCollidableWithTileCoord:nextTileCoord]) {
+            if (!CGPointEqualToPoint(targetTile, CGPointZero)) {
                 self.state = kStateMoving;
                 break;
             }
@@ -131,23 +142,40 @@
         } 
         case kStateMoving:
         {
-            if ([mapDelegate isCollidableWithTileCoord:nextTileCoord]) {
-                self.state = kStateIdle;
+            if (!CGPointEqualToPoint(targetTile, CGPointZero)) {
+                self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile];
+                targetTile = CGPointZero;
+                
+            }
+            
+            if(targetPath.count > 0) {
+                CGPoint nextTileCoord = [self getNextTileCoordWithPath:targetPath];
+                [self updateDirectionWithTileCoord:nextTileCoord];
+                [self updateSprite];
+                [self moveToPosition:[mapDelegate centerPositionAt:nextTileCoord] withDeltaTime:deltaTime];
                 break;
             }
             else {
-                if (attemptedTurn == kTurnAttemptSuccess) {
-                    velocity = velocity + 100 * deltaTime;
-                    hasTurnedCorrectly = NO;
-                    attemptedTurn = kTurnNotAttempted;
-                }
-                else if(attemptedTurn == kTurnAttemptFailed) {
-                    velocity = kBaseVelocity;
-                    attemptedTurn = kTurnNotAttempted;
-                }
+                CGPoint nextTileCoord = [self getNextTileCoordWithCurrentTileCoord:self.tileCoordinate andDirection:direction];
                 
-                [self moveWithDirectionWithDeltaTime:deltaTime];
-                break;
+                if ([mapDelegate isCollidableWithTileCoord:nextTileCoord]) {
+                    self.state = kStateIdle;
+                    break;
+                }
+                else {
+                    if (attemptedTurn == kTurnAttemptSuccess) {
+                        velocity = velocity + 100 * deltaTime;
+                        hasTurnedCorrectly = NO;
+                        attemptedTurn = kTurnNotAttempted;
+                    }
+                    else if(attemptedTurn == kTurnAttemptFailed) {
+                        velocity = kBaseVelocity;
+                        attemptedTurn = kTurnNotAttempted;
+                    }
+                    
+                    [self moveWithDirectionWithDeltaTime:deltaTime];
+                    break;
+                }
             }
         }
         case kStateJumping:
@@ -200,15 +228,14 @@
 
 - (void)moveWithDirectionWithDeltaTime:(ccTime)deltaTime
 {
-    CGPoint nextTileCoord = [self getNextTileCoordWithDirection:direction];
+    CGPoint nextTileCoord = [self getNextTileCoordWithCurrentTileCoord:self.tileCoordinate andDirection:direction];
     CGPoint nextTilePosition = [mapDelegate centerPositionAt:nextTileCoord];
     [self moveToPosition:nextTilePosition withDeltaTime:deltaTime];
 }
 
-- (CGPoint)getNextTileCoordWithDirection:(characterDirection)dir
+- (CGPoint)getNextTileCoordWithCurrentTileCoord:(CGPoint)tileCoord andDirection:(characterDirection)dir
 {
-    CGPoint currentTileCoord = self.tileCoordinate;
-    CGPoint nextTileLocation = currentTileCoord;
+    CGPoint nextTileLocation = tileCoord;
     
     switch (dir) {
         case kDirectionUp:

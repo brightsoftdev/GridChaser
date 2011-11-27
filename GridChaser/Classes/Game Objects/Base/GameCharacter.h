@@ -19,6 +19,8 @@ typedef enum {
 
 @interface GameCharacter : GameObject {
     int characterHealth;
+    CGPoint targetTile;
+    NSMutableArray *targetPath;
     characterDirection direction;
     float velocity;
     float acceleration;
@@ -30,17 +32,21 @@ typedef enum {
 
 -(id) initWithDirection:(characterDirection) startingDirection;
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime;
+-(CGPoint) getNextTileCoordWithPath:(NSMutableArray *)path;
+-(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;
 -(void) updateDirectionWithTileCoord:(CGPoint) tileCoord;
--(void)updateSprite;
--(void) moveToPositionWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;
+-(void) updateSprite;
+
 
 @property (nonatomic,assign) int characterHealth;
+@property (nonatomic,assign) CGPoint targetTile;
 @property (nonatomic,assign) characterDirection direction;
 @property (nonatomic,assign) float velocity;
 @property (nonatomic,assign) float acceleration;
 @property (nonatomic,assign) float topSpeed;
 @property (nonatomic,assign) CharacterState state;
 @property (nonatomic,assign) id<MapDelegate> mapDelegate;
+@property (nonatomic,retain) NSMutableArray *targetPath;
 @property (nonatomic,readonly) CGPoint tileCoordinate;
 
 @end

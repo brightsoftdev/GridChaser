@@ -10,13 +10,15 @@
 
 @implementation GameCharacter
 
-@synthesize characterHealth,direction,velocity,acceleration,topSpeed,state,mapDelegate,tileCoordinate;
+@synthesize characterHealth,targetTile,targetPath,direction,velocity,acceleration,topSpeed,state,mapDelegate,tileCoordinate;
 
 - (id)initWithDirection: (characterDirection) startingDirection
 {
     self = [super init];
     if (self) {
         velocity = 40;
+        targetTile = CGPointZero;
+        targetPath = [[NSMutableArray alloc] init];
         direction = startingDirection;
         acceleration = 10;
         topSpeed = 125;
@@ -25,6 +27,12 @@
     }
     
     return self;
+}
+
+- (void) dealloc
+{
+    [super dealloc];
+    [targetPath release];
 }
 
 -(CGPoint) tileCoordinate {
@@ -88,7 +96,31 @@
     //CCLOG(@"updateSprite should be overridden"); 
 }
 
--(void) moveToPositionWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime
+-(CGPoint) getNextTileCoordWithPath:(NSMutableArray *)path
+{
+    CGPoint nextTileCoord = CGPointZero;
+    
+    if([mapDelegate isPathValid:path]) {
+        //grab the next position from the path, get the center tile coordinate.
+        CGPoint currentTileCoord = self.tileCoordinate;
+        nextTileCoord = CGPointFromString([path objectAtIndex:0]);
+        
+        //check to see if we are not already at the first point
+        if(CGPointEqualToPoint(currentTileCoord,nextTileCoord)) {
+            [path removeObject:NSStringFromCGPoint(nextTileCoord)];
+            
+            if([path count] == 0) {
+                return nextTileCoord;
+            }
+            else {
+                nextTileCoord = CGPointFromString([path objectAtIndex:0]);
+            }
+        }
+    }
+    return nextTileCoord;
+}
+
+-(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime
 {
     //Check to see if path is valid
     if([mapDelegate isPathValid:path]) {
@@ -136,8 +168,6 @@
     else {
         velocity = newVelocity;
     }
-     
-
 }
 
 @end
