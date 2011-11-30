@@ -53,9 +53,22 @@
 #pragma mark CharacterStates
 typedef enum {
     kStateIdle,
+    kStatePatrolling,
+    kStateCreeping,
+    kStateAlarmed,
+    kStateChasing,
     kStateMoving,
     kStateJumping
 } CharacterState; // 1
+
+#pragma mark -
+#pragma mark CharacterDirection
+typedef enum {
+    kDirectionUp = 0,
+    kDirectionRight = 1,
+    kDirectionDown = 2,
+    kDirectionLeft = 3
+} characterDirection; 
 
 #pragma mark -
 #pragma mark GameObjectTypes
@@ -80,9 +93,11 @@ static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
 @protocol MapDelegate
 - (CGPoint)tileCoordForPosition:(CGPoint)position;
 - (CGPoint) centerPositionAt:(CGPoint)position;
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origin to:(CGPoint)destination;
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord;
 - (BOOL) isPathValid:(NSMutableArray*)path;
 - (BOOL) isCollidableWithTileCoord:(CGPoint)tileCoord;
+- (CGSize) getMapSize;
+- (CGSize) getTileSize;
 @end
 
 #endif

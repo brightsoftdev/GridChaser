@@ -56,6 +56,16 @@
     return newPosition;
 }
 
+- (CGSize) getMapSize
+{
+    return self.mapSize;
+}
+
+- (CGSize) getTileSize
+{
+    return self.tileSize;
+}
+
 - (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord
 {
     return [pathFinder getPathPointsFrom:origTileCoord to:destTileCoord];

@@ -187,7 +187,7 @@
     else if(type == kGameObjectEnemyCar) {
         EnemyCar *enemy = [EnemyCar spriteWithSpriteFrameName:kEnemyCarImage];
         enemy.mapDelegate = gameMap;
-        enemy.state = kStateMoving;
+        enemy.state = kStatePatrolling;
         
         CGPoint spawnPoint = [gameMap centerPositionAt:CGPointMake(25, 4)];
         enemy.position = spawnPoint;

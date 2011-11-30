@@ -12,20 +12,18 @@
 
 @synthesize characterHealth,targetTile,targetPath,direction,velocity,acceleration,topSpeed,state,mapDelegate,tileCoordinate;
 
-- (id)initWithDirection: (characterDirection) startingDirection
+- (id)init
 {
     self = [super init];
     if (self) {
         velocity = 40;
-        targetTile = CGPointZero;
+        targetTile = ccp(-1, -1);
         targetPath = [[NSMutableArray alloc] init];
-        direction = startingDirection;
         acceleration = 10;
         topSpeed = 125;
         characterHealth = 100;
         state = kStateIdle;
     }
-    
     return self;
 }
 

@@ -8,15 +8,6 @@
 
 #import "GameObject.h"
 
-#pragma mark -
-#pragma mark CharacterDirection
-typedef enum {
-    kDirectionUp = 0,
-    kDirectionRight = 1,
-    kDirectionDown = 2,
-    kDirectionLeft = 3
-} characterDirection; 
-
 @interface GameCharacter : GameObject {
     int characterHealth;
     CGPoint targetTile;
@@ -30,7 +21,6 @@ typedef enum {
     CGPoint tileCoordinate;
 }
 
--(id) initWithDirection:(characterDirection) startingDirection;
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime;
 -(CGPoint) getNextTileCoordWithPath:(NSMutableArray *)path;
 -(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;

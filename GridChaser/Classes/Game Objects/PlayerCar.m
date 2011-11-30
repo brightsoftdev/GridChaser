@@ -130,7 +130,7 @@
     switch (state) {
         case kStateIdle:
         {
-            if (!CGPointEqualToPoint(targetTile, CGPointZero)) {
+            if (!CGPointEqualToPoint(targetTile, ccp(-1, -1))) {
                 self.state = kStateMoving;
                 break;
             }
@@ -142,9 +142,9 @@
         } 
         case kStateMoving:
         {
-            if (!CGPointEqualToPoint(targetTile, CGPointZero)) {
+            if (!CGPointEqualToPoint(targetTile, ccp(-1, -1))) {
                 self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile];
-                targetTile = CGPointZero;
+                targetTile = ccp(-1, -1);
                 
             }
             
