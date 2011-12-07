@@ -143,7 +143,7 @@
         case kStateMoving:
         {
             if (!CGPointEqualToPoint(targetTile, ccp(-1, -1))) {
-                self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile];
+                self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile withDirection:direction];
                 targetTile = ccp(-1, -1);
                 
             }

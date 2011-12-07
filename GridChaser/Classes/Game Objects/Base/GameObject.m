@@ -10,7 +10,7 @@
 
 @implementation GameObject
 
-@synthesize isActive,isTouched;
+@synthesize isActive,isTouched,mapDelegate,tileCoordinate;
 
 - (id)init
 {
@@ -22,6 +22,13 @@
     
     return self;
 }
+
+
+-(CGPoint) tileCoordinate {
+    CGPoint currentTileCoordinate = [mapDelegate tileCoordForPosition:self.position];
+    return currentTileCoordinate;
+}
+
 
 -(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {

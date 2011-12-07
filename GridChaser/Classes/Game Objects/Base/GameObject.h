@@ -14,11 +14,18 @@
 @interface GameObject : CCSprite {
     BOOL isActive;
     BOOL isTouched;
+    CGPoint tileCoordinate;
+    id<MapDelegate> mapDelegate;
 }
+
+-(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray*)arrayOfGameObjects;
 
 @property (nonatomic,assign) BOOL isActive;
 @property (nonatomic,assign) BOOL isTouched;
+@property (nonatomic,assign) id<MapDelegate> mapDelegate;
+@property (nonatomic,readonly) CGPoint tileCoordinate;
 
--(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray*)arrayOfGameObjects;
+
+
 
 @end

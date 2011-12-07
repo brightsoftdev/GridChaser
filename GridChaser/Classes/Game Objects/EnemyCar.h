@@ -14,6 +14,11 @@
 
 @interface EnemyCar : GameCharacter {
     CGPoint lastKnownPlayerCoord;
+    int vision;
 }
+
+@property(nonatomic,readwrite,assign) CGPoint lastKnownPlayerCoord;
+@property(nonatomic,readwrite,assign) int vision;
+
 
 @end

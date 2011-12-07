@@ -42,7 +42,6 @@
 #define kMapTrue @"True"
 #define kMapFalse @"False"
 
-
 #pragma mark - 
 #pragma mark MapObjects
 
@@ -80,7 +79,11 @@ typedef enum {
 #pragma mark -
 #pragma mark AdjacentTiles
 static const int numAdjacentTiles = 4;
-static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
+
+//NOTE: adjacent tiles must be defined in correct order
+// Up,Right,Down,Left otherwise pathing will not work correctly.
+// Changes will also have to be made to AStarPathFinder.m ~line 75
+static const int adjacentTiles[4][2] = { 0,-1, 1,0, 0,1, -1,0 };
 
 #pragma mark -
 #pragma mark GameplayLayerDelegate
@@ -93,7 +96,7 @@ static const int adjacentTiles[4][2] = { 0,1, -1,0, 1,0, 0,-1};
 @protocol MapDelegate
 - (CGPoint)tileCoordForPosition:(CGPoint)position;
 - (CGPoint) centerPositionAt:(CGPoint)position;
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord;
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection;;
 - (BOOL) isPathValid:(NSMutableArray*)path;
 - (BOOL) isCollidableWithTileCoord:(CGPoint)tileCoord;
 - (CGSize) getMapSize;

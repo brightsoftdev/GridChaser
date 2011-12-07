@@ -10,7 +10,7 @@
 
 @implementation GameCharacter
 
-@synthesize characterHealth,targetTile,targetPath,direction,velocity,acceleration,topSpeed,state,mapDelegate,tileCoordinate;
+@synthesize characterHealth,targetTile,targetPath,direction,velocity,acceleration,topSpeed,state;
 
 - (id)init
 {
@@ -33,9 +33,39 @@
     [targetPath release];
 }
 
--(CGPoint) tileCoordinate {
-    CGPoint currentTileCoordinate = [mapDelegate tileCoordForPosition:self.position];
-    return currentTileCoordinate;
+-(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(characterDirection) dir;
+{
+    CGPoint adjacentTileCoord;
+    //TODO: Remove code which relies on adjacentTiles[][] order to work.
+    switch (dir) {
+        case kDirectionUp:
+        {
+            adjacentTileCoord = ccp(adjacentTiles[kDirectionUp][0],adjacentTiles[kDirectionUp][1]);
+            break;
+        }
+        case kDirectionRight:
+        {
+            adjacentTileCoord = ccp(adjacentTiles[kDirectionRight][0],adjacentTiles[kDirectionRight][1]);
+            break;
+        }
+        case kDirectionDown:
+        {
+            adjacentTileCoord = ccp(adjacentTiles[kDirectionDown][0],adjacentTiles[kDirectionDown][1]);
+            break;
+        }
+        case kDirectionLeft:
+        {
+            adjacentTileCoord = ccp(adjacentTiles[kDirectionLeft][0],adjacentTiles[kDirectionLeft][1]);
+            break;
+        }
+        default:
+        {
+            CCLOG(@"Could not find adjacent tile coord, double check characterDirection given");
+        }
+            break;
+    }
+    adjacentTileCoord = ccpAdd(tileCoord,adjacentTileCoord);
+    return adjacentTileCoord;
 }
 
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime

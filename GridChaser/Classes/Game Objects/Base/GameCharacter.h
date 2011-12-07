@@ -17,16 +17,7 @@
     float acceleration;
     float topSpeed;
     CharacterState state;
-    id<MapDelegate> mapDelegate;
-    CGPoint tileCoordinate;
 }
-
--(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime;
--(CGPoint) getNextTileCoordWithPath:(NSMutableArray *)path;
--(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;
--(void) updateDirectionWithTileCoord:(CGPoint) tileCoord;
--(void) updateSprite;
-
 
 @property (nonatomic,assign) int characterHealth;
 @property (nonatomic,assign) CGPoint targetTile;
@@ -35,8 +26,13 @@
 @property (nonatomic,assign) float acceleration;
 @property (nonatomic,assign) float topSpeed;
 @property (nonatomic,assign) CharacterState state;
-@property (nonatomic,assign) id<MapDelegate> mapDelegate;
 @property (nonatomic,retain) NSMutableArray *targetPath;
-@property (nonatomic,readonly) CGPoint tileCoordinate;
+
+-(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime;
+-(CGPoint) getNextTileCoordWithPath:(NSMutableArray *)path;
+-(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(characterDirection) dir;
+-(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;
+-(void) updateDirectionWithTileCoord:(CGPoint) tileCoord;
+-(void) updateSprite;
 
 @end

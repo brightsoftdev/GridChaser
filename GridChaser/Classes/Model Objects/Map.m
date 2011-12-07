@@ -66,9 +66,9 @@
     return self.tileSize;
 }
 
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection
 {
-    return [pathFinder getPathPointsFrom:origTileCoord to:destTileCoord];
+    return [pathFinder getPathPointsFrom:origTileCoord to:destTileCoord withDirection:startingDirection];
 }
 
 - (BOOL) isCollidableWithTileCoord:(CGPoint)tileCoord

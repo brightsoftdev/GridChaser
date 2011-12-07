@@ -8,8 +8,9 @@
 
 #import "EnemyCar.h"
 
-
 @implementation EnemyCar
+
+@synthesize lastKnownPlayerCoord,vision;
 
 #define kBaseVelocity 40
 
@@ -19,6 +20,8 @@
         velocity = kBaseVelocity;
         acceleration = 5;
         topSpeed = 100;
+        vision = 4;
+        lastKnownPlayerCoord = ccp(-1, -1);
     }
     
     return self;
@@ -69,9 +72,34 @@
     return bestPosition;
 }
 
+-(BOOL) isGameObjectVisible:(GameObject *) gameObject 
+{
+    CGPoint adjacentTile = self.tileCoordinate;
+    for (int i = 0; i < vision; i++) {
+        adjacentTile = [self getAdjacentTileFromTileCoord:adjacentTile WithDirection:direction];
+        
+        if ([self.mapDelegate isCollidableWithTileCoord:adjacentTile]) {
+            break;
+        }
+        else if (CGPointEqualToPoint(gameObject.tileCoordinate, adjacentTile)) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 -(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
     [super updateWithDeltaTime:deltaTime andArrayOfGameObjects:arrayOfGameObjects];
+    
+    PlayerCar *player = nil;
+    
+    for (GameCharacter *tempChar in arrayOfGameObjects) {
+        if(tempChar.tag == kPlayerCarTag) {
+            player = (PlayerCar*)tempChar;
+            break;
+        }
+    }
     
     switch (state) {
         case kStateIdle:
@@ -80,6 +108,16 @@
             
         case kStatePatrolling:
         {
+            if ([self isGameObjectVisible:player]) {
+                #if GRID_CHASER_DEBUG_MODE
+                    CCLOG(@"Player is visible!");
+                #endif
+            }
+            else {
+                #if GRID_CHASER_DEBUG_MODE
+                    CCLOG(@"Player is not visible!");
+                #endif
+            }
             acceleration = 1;
             topSpeed = 50;
             
@@ -95,7 +133,7 @@
                 }
                 
                 targetTile = nextTargetTile;
-                self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile];
+                self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile withDirection:direction];
             }
             else if(targetPath.count > 0 && !CGPointEqualToPoint(targetTile, self.tileCoordinate)) {
                 CGPoint nextTileCoord = [self getNextTileCoordWithPath:targetPath];
@@ -110,6 +148,7 @@
                 targetTile = ccp(-1, -1);
                 //move to another tileCoord;
             }
+            break;
         }
             
         case kStateMoving:

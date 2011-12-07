@@ -10,7 +10,7 @@
 
 @interface AStarPathFinder (Private)
     - (AStarNode *)lowestCostNode;
-    - (AStarNode *) findShortestPathFrom:(CGPoint)origin to:(CGPoint)destination;
+    - (AStarNode *) findShortestPathFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection;
     
 @end
 
@@ -40,7 +40,7 @@
     [closedNodes release];
 }
 
-- (AStarNode *) findShortestPathFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord
+- (AStarNode *) findShortestPathFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection;
 {
     [openNodes removeAllObjects];
     [closedNodes removeAllObjects];
@@ -51,7 +51,7 @@
         return nil;
     }
     
-    AStarNode *originNode = [AStarNode nodeWithPoint:origTileCoord];
+    AStarNode *originNode = [AStarNode nodeWithPoint:origTileCoord andDirection:startingDirection];
     originNode.parent = nil;
     [openNodes addObject:originNode];
     
@@ -74,8 +74,23 @@
         for (int i = 0; i < numAdjacentTiles; i++) {
             int x = adjacentTiles[i][0];
             int y = adjacentTiles[i][1];
+            characterDirection newDirection = i;
             
-            AStarNode *adjacentNode = [AStarNode nodeWithPoint:ccp(x + closestNode.point.x, y + closestNode.point.y)];
+            if (closestNode.direction == kDirectionUp && y == 1) {
+                continue;
+            }
+            else if(closestNode.direction == kDirectionRight && x == -1) {
+                continue;
+            }
+            else if(closestNode.direction == kDirectionDown && y == -1) {
+                continue;
+            }
+            else if(closestNode.direction == kDirectionLeft && x == 1) {
+                continue;
+            }
+            
+            //otherwise make an astar node with the expected direction
+            AStarNode *adjacentNode = [AStarNode nodeWithPoint:ccp(x + closestNode.point.x, y + closestNode.point.y) andDirection:newDirection];
             adjacentNode.parent = closestNode;
             
             if([closedNodes containsObject:adjacentNode]) {
@@ -107,7 +122,6 @@
             //add to open set
             else {
                 adjacentNode.h = (abs(adjacentNode.point.x + destTileCoord.x) + abs(adjacentNode.point.y + destTileCoord.y)) * 10;
-                 //CCLOG(@"Adding Point: %@",NSStringFromCGPoint(adjacentNode.point));
                 [openNodes addObject:adjacentNode];
             }
         }
@@ -115,11 +129,11 @@
     return nil;
 }
 
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection
 {
     NSMutableArray *paths = [NSMutableArray array];
     
-    AStarNode *destinationNode = [self findShortestPathFrom:origTileCoord to:destTileCoord];
+    AStarNode *destinationNode = [self findShortestPathFrom:origTileCoord to:destTileCoord withDirection:startingDirection];
     
     if(destinationNode == nil) {
         return paths;
@@ -195,16 +209,17 @@
 
 @implementation AStarNode
 
-@synthesize point,parent,f,g,h;
+@synthesize point,parent,direction,f,g,h;
 
-+(id) nodeWithPoint:(CGPoint)newPoint
++(id) nodeWithPoint:(CGPoint)newPoint andDirection:(characterDirection)newDirection
 {
-    return [[[AStarNode alloc] initWithPoint:newPoint] autorelease];
+    return [[[AStarNode alloc] initWithPoint:newPoint andDirection:newDirection] autorelease];
 }
 
--(id) initWithPoint:(CGPoint)newPoint
+-(id) initWithPoint:(CGPoint)newPoint andDirection:(characterDirection) newDirection
 {
     self.point = newPoint;
+    self.direction = newDirection;
 //    x = newPoint.x;
 //    y = newPoint.y;
     
@@ -239,7 +254,7 @@
     
     AStarNode *otherNode = (AStarNode*) otherObject;
     
-    if (point.x == otherNode.point.x && point.y == otherNode.point.y)
+    if (point.x == otherNode.point.x && point.y == otherNode.point.y && direction == otherNode.direction)
     {
         return YES;
     }
