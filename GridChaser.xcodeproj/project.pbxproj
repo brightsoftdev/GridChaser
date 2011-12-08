@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A90F424C1464E50D00009465 /* Left Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A90F424A1464E50D00009465 /* Left Arrow.png */; };
 		A90F424D1464E50D00009465 /* Right Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A90F424B1464E50D00009465 /* Right Arrow.png */; };
+		A931A2401490623200409755 /* TestLevel4.tmx in Resources */ = {isa = PBXBuildFile; fileRef = A931A23F1490623200409755 /* TestLevel4.tmx */; };
+		A931A24314906BFA00409755 /* tmw_desert_spacing_final.png in Resources */ = {isa = PBXBuildFile; fileRef = A931A24214906BFA00409755 /* tmw_desert_spacing_final.png */; };
+		A931A24514906C5D00409755 /* Collision.png in Resources */ = {isa = PBXBuildFile; fileRef = A931A24414906C5D00409755 /* Collision.png */; };
 		A96DA7501415499E008AF043 /* Marker.m in Sources */ = {isa = PBXBuildFile; fileRef = A96DA74F1415499D008AF043 /* Marker.m */; };
 		A97512CB143787D2008F3CB2 /* AIDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = A97512CA143787D2008F3CB2 /* AIDirector.m */; };
 		A99B7912141946090045DE9C /* Collision.png in Resources */ = {isa = PBXBuildFile; fileRef = A99B790F141946090045DE9C /* Collision.png */; };
@@ -152,6 +155,9 @@
 /* Begin PBXFileReference section */
 		A90F424A1464E50D00009465 /* Left Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Left Arrow.png"; sourceTree = "<group>"; };
 		A90F424B1464E50D00009465 /* Right Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Right Arrow.png"; sourceTree = "<group>"; };
+		A931A23F1490623200409755 /* TestLevel4.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLevel4.tmx; sourceTree = "<group>"; };
+		A931A24214906BFA00409755 /* tmw_desert_spacing_final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tmw_desert_spacing_final.png; sourceTree = "<group>"; };
+		A931A24414906C5D00409755 /* Collision.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Collision.png; sourceTree = "<group>"; };
 		A96DA74E1415499D008AF043 /* Marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Marker.h; sourceTree = "<group>"; };
 		A96DA74F1415499D008AF043 /* Marker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Marker.m; sourceTree = "<group>"; };
 		A97512C9143787D2008F3CB2 /* AIDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIDirector.h; sourceTree = "<group>"; };
@@ -451,6 +457,16 @@
 				A90F424B1464E50D00009465 /* Right Arrow.png */,
 			);
 			path = GUI;
+			sourceTree = "<group>";
+		};
+		A931A23E1490623200409755 /* TestLevel4 */ = {
+			isa = PBXGroup;
+			children = (
+				A931A24414906C5D00409755 /* Collision.png */,
+				A931A24214906BFA00409755 /* tmw_desert_spacing_final.png */,
+				A931A23F1490623200409755 /* TestLevel4.tmx */,
+			);
+			path = TestLevel4;
 			sourceTree = "<group>";
 		};
 		A9656D0E14098B7000C9D76C /* Desert */ = {
@@ -958,6 +974,7 @@
 		A9BEE85414097B5F00AF679C /* Maps */ = {
 			isa = PBXGroup;
 			children = (
+				A931A23E1490623200409755 /* TestLevel4 */,
 				A9BD7316142A3F22005786F8 /* TestLevel2 */,
 				A9656D0E14098B7000C9D76C /* Desert */,
 			);
@@ -1069,6 +1086,9 @@
 				A99F5AFF146F2F780067DF9C /* Vertical-Morton2.png in Resources */,
 				A9C281FB14761D16007ED445 /* Left Arrow2.png in Resources */,
 				A9C281FC14761D16007ED445 /* Right Arrow2.png in Resources */,
+				A931A2401490623200409755 /* TestLevel4.tmx in Resources */,
+				A931A24314906BFA00409755 /* tmw_desert_spacing_final.png in Resources */,
+				A931A24514906C5D00409755 /* Collision.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

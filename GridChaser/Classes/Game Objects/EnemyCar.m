@@ -112,46 +112,54 @@
                 #if GRID_CHASER_DEBUG_MODE
                     CCLOG(@"Player is visible!");
                 #endif
+                //if noteriety is above a certain level, then chase
+                //otherwise we might follow/creep toward the player
+                //or do nothing
+                
+                self.state = kStateChasing;
+                break;
             }
             else {
                 #if GRID_CHASER_DEBUG_MODE
                     CCLOG(@"Player is not visible!");
                 #endif
-            }
-            acceleration = 1;
-            topSpeed = 50;
+                //continue patrolling
             
-            if(targetPath.count == 0 && CGPointEqualToPoint(targetTile, ccp(-1, -1))) {
-                //set a new position
-                CGPoint nextTargetTile = ccp(-1, -1);
-                CGSize mapSize = [mapDelegate getMapSize];
+                acceleration = 1;
+                topSpeed = 50;
                 
-                while ([mapDelegate isCollidableWithTileCoord:nextTargetTile]) {
-                    int x = arc4random() % (int)mapSize.width;
-                    int y = arc4random() % (int)mapSize.height;
-                    nextTargetTile = ccp(x, y);
+                if(targetPath.count == 0 && CGPointEqualToPoint(targetTile, ccp(-1, -1))) {
+                    //set a new position
+                    CGPoint nextTargetTile = ccp(-1, -1);
+                    CGSize mapSize = [mapDelegate getMapSize];
+                    
+                    while ([mapDelegate isCollidableWithTileCoord:nextTargetTile]) {
+                        int x = arc4random() % (int)mapSize.width;
+                        int y = arc4random() % (int)mapSize.height;
+                        nextTargetTile = ccp(x, y);
+                    }
+                    
+                    targetTile = nextTargetTile;
+                    self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile withDirection:direction];
                 }
-                
-                targetTile = nextTargetTile;
-                self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile withDirection:direction];
+                else if(targetPath.count > 0 && !CGPointEqualToPoint(targetTile, self.tileCoordinate)) {
+                    CGPoint nextTileCoord = [self getNextTileCoordWithPath:targetPath];
+                    [self updateDirectionWithTileCoord:nextTileCoord];
+                    [self updateSprite];
+                    [self moveToPosition:[mapDelegate centerPositionAt:nextTileCoord] withDeltaTime:deltaTime];
+                }
+                else if(CGPointEqualToPoint(targetTile, self.tileCoordinate)){
+                    //wait a second or two or three
+                    
+                    
+                    targetTile = ccp(-1, -1);
+                    //move to another tileCoord;
+                }
+                break;
             }
-            else if(targetPath.count > 0 && !CGPointEqualToPoint(targetTile, self.tileCoordinate)) {
-                CGPoint nextTileCoord = [self getNextTileCoordWithPath:targetPath];
-                [self updateDirectionWithTileCoord:nextTileCoord];
-                [self updateSprite];
-                [self moveToPosition:[mapDelegate centerPositionAt:nextTileCoord] withDeltaTime:deltaTime];
-            }
-            else if(CGPointEqualToPoint(targetTile, self.tileCoordinate)){
-                //wait a second or two or three
-                
-                
-                targetTile = ccp(-1, -1);
-                //move to another tileCoord;
-            }
-            break;
         }
             
-        case kStateMoving:
+        case kStateChasing:
         {    
             PlayerCar *player = nil;
             

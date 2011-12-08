@@ -37,6 +37,7 @@
 
 #define kMapTestLevelTMX @"TestLevel.tmx"
 #define kMapTestLevel2TMX @"TestLevel2.tmx"
+#define kMapTestLevel4TMX @"TestLevel4.tmx"
 
 #pragma mark -
 #pragma mark SpriteBatches

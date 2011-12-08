@@ -15,7 +15,7 @@
 
 - (id)init
 {
-    self = [super initWithTMXFile:kMapTestLevelTMX];
+    self = [super initWithTMXFile:kMapTestLevel4TMX];
     if (self) {
         backgroundLayer = [self layerNamed:kMapBackgroundLayer];
         foregroundLayer = [self layerNamed:kMapForegroundLayer];

@@ -3,14 +3,14 @@
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="16" tileheight="16" spacing="2" margin="2">
   <image source="../Desert/tmw_desert_spacing.png" width="146" height="110"/>
  </tileset>
- <layer name="X:0-40, Y:0-40" width="160" height="160">
+ <layer name="X:0-39, Y:0-39" width="160" height="160">
   <data encoding="base64" compression="zlib">
-   eJzt0rEJw1AQBcFrw3ZkHFnuvz+pAoGCzwozAy+/g33MzPOmew3/7l0fcOJTH8By+qOkP0r6o6Q/SvqjpD9K+qOkP0r6o6Q/SvqjpD9K+qOkP0r6o6Q/SvqjpD9K+qOkP0r6o6Q/SvqjpD9K+qOkP0r6o6Q/SvqjpD9K+qOkP0r6o6Q/SvqjpD9K+qP0PbbddL+FfwMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANftYKAUuQ==
+   eJzt3N1ugkAQBtB9DWvSpD9etLbv/3qVCxNKZmFxUAmck2xShAtNv+zMruChlPKy0nEsbN3bZXxexvfKxukyPu74uVmHLn/d//l1ZeP6vti2fv4Opb0utl5fu3bqdfnbh37+ur/fG8ac66/XfpX/9fU88br87UM/f8Ms1EY/I635U3+JZPq/lrxes6r+Esn0f5msqr90Mv3fnPWH+kvkUf2f+ksk0/9Z/5IV9X/Dual2PGf9of4Sifq/1uM5Q/0lkslfS6Zqc6X6SyeTv+G9C8NMnYr9Z8Zl8zeWr7G9RfWXTiZ/3TwXfb9xDM6rv0Si/b9hNmrHte83bl3zqr/7k9n/6+a8se83+ufn7u3I3z5k9v9q/V10/tbekm1bqv+L6m90vvVY/vZhqf5v6SF/+7BU/xfVX/0fU5bYo6vVX/0fU8buv2rdo5uqofJHTfb+q59Sny9/i/wxLlN/W+bL4b2q8kdfpv7OnSvlj6Hs+rf1+Q/7f0Sy61/P/5KRXf8u+ayc/b/9edTz57f8tof8bV+m/i6dVf3f/mTqr+fPyXrU87/6PyKPWv/q/4hk6u+c9Yf+j4jf3+WZhvcQrGVc711g21rr4jPG+Y6fGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmO8PSUrMZQ==
   </data>
  </layer>
- <layer name="Tile Layer 2" width="160" height="160">
+ <layer name="X:40-79, Y:0-39" width="160" height="160">
   <data encoding="base64" compression="zlib">
-   eJztwQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwYkA8AAQ==
+   eJzt3Ntqg0AQBmBfow0UeshFT+//etULwcqsrhljRL8PFmr0IqE/O7MbTdPs21M7nnc6Lnf83OzDazs+2vG1s3Ftx/sdPzf70OWv+z+/7Gz074tjG+avthZfFlxfunbudfk7h2H+ur/fKsaS6/trP5v/9fV75nX5O4dh/sZZKI1hRmrzp/4SyfR/NXnts6r+Esn0f5msqr90Mv3fkvWH+ktkq/5P/SWS6f+sf8mK+r/x3FQ6XrL+UH+JRP1f7fGSof4SyeSvJlOluVL9pZPJ3/jehXGmro39Z6Zl8zeVr6m9RfWXTiZ/3TwXfb9xCc6rv0Si/b9xNkrHpe83bl3zqr/nk9n/6+a8qe83hueX7u3I3zlk9v9K/V10/tbekmNbq/+L6m90vvZY/s5hrf5v7SF/57BW/xfVX/0fc9bYoyvVX/0fc6buv6rdo5urofJHSfb+q5+mPF/+NvLHtEz9rZkvx/eqyh9Dmfq7dK6UP8ay69/a5z/s/xHJrn89/0tGdv275rNy9v/OZ6vnz2/5bQ/5O75M/V07q/q/88nUX8+fk7XV87/6PyJbrX/1f0Qy9XfJ+kP/R8Tv7/JI43sI9jL6exc4ttq6+IjxfcfPDQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAe/QHg0rMZQ==
   </data>
  </layer>
  <layer name="Tile Layer 3" width="160" height="160">
