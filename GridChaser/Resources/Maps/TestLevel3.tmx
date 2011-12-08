@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="160" height="160" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="16" tileheight="16" spacing="2" margin="2">
-  <image source="../Desert/tmw_desert_spacing.png" width="146" height="110"/>
+  <image source="tmw_desert_spacing.png" width="146" height="110"/>
  </tileset>
  <layer name="X:0-39, Y:0-39" width="160" height="160">
   <data encoding="base64" compression="zlib">
