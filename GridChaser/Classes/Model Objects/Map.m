@@ -48,9 +48,9 @@
     return ccp(x, y);
 }
 
-- (CGPoint) centerPositionAt:(CGPoint)position
+- (CGPoint) centerPositionFromTileCoord:(CGPoint)tileCoord
 {
-    CGPoint newPosition = [collisionLayer positionAt:position];
+    CGPoint newPosition = [collisionLayer positionAt:tileCoord];
     newPosition.x += self.tileSize.width * 0.5;
     newPosition.y += self.tileSize.height * 0.5;
     return newPosition;
@@ -66,7 +66,7 @@
     return self.tileSize;
 }
 
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(CharacterDirection) startingDirection
 {
     return [pathFinder getPathPointsFrom:origTileCoord to:destTileCoord withDirection:startingDirection];
 }

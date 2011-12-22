@@ -50,15 +50,35 @@
 
 #pragma mark -
 #pragma mark CharacterStates
+
 typedef enum {
     kStateIdle,
-    kStatePatrolling,
-    kStateCreeping,
-    kStateAlarmed,
-    kStateChasing,
     kStateMoving,
-    kStateJumping
-} CharacterState; // 1
+} PlayerState; // 1
+
+typedef enum {
+    kStatePatrolling,
+    kStateCautiousPatrolling,
+    kStateCreeping,
+    kStateChasing,
+    kStateAlarmed,
+} EnemyState; //2
+
+
+//TODO: redesign turn attempt so that it is merged with SuccessRate;
+#pragma TurnAttempt
+typedef enum {
+    kTurnAttemptPerfect = 5,
+    kTurnAttemptGood = 10,
+    kTurnAttemptOkay = 20,
+    kTurnAttemptPoor = 30,
+    kTurnAttemptTerrible = 40,
+    kTurnAttemptSuccess,
+    kTurnAttemptFailed,
+    kTurnNotAttempted
+} CharacterTurnAttempt;
+
+#define kSuccessRatePerfect 100
 
 #pragma mark -
 #pragma mark CharacterDirection
@@ -66,8 +86,9 @@ typedef enum {
     kDirectionUp = 0,
     kDirectionRight = 1,
     kDirectionDown = 2,
-    kDirectionLeft = 3
-} characterDirection; 
+    kDirectionLeft = 3,
+    kDirectionNull
+} CharacterDirection; 
 
 #pragma mark -
 #pragma mark GameObjectTypes
@@ -95,8 +116,8 @@ static const int adjacentTiles[4][2] = { 0,-1, 1,0, 0,1, -1,0 };
 #pragma mark MapDelegate
 @protocol MapDelegate
 - (CGPoint)tileCoordForPosition:(CGPoint)position;
-- (CGPoint) centerPositionAt:(CGPoint)position;
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection;;
+- (CGPoint) centerPositionFromTileCoord:(CGPoint)tileCoord;
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(CharacterDirection) startingDirection;;
 - (BOOL) isPathValid:(NSMutableArray*)path;
 - (BOOL) isCollidableWithTileCoord:(CGPoint)tileCoord;
 - (CGSize) getMapSize;

@@ -10,7 +10,7 @@
 
 @implementation GameCharacter
 
-@synthesize characterHealth,targetTile,targetPath,direction,velocity,acceleration,topSpeed,state;
+@synthesize characterHealth,targetTile,targetPath,direction,velocity,acceleration,topSpeed;
 
 - (id)init
 {
@@ -22,7 +22,6 @@
         acceleration = 10;
         topSpeed = 125;
         characterHealth = 100;
-        state = kStateIdle;
     }
     return self;
 }
@@ -33,7 +32,7 @@
     [targetPath release];
 }
 
--(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(characterDirection) dir;
+-(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(CharacterDirection) dir;
 {
     CGPoint adjacentTileCoord;
     //TODO: Remove code which relies on adjacentTiles[][] order to work.
@@ -68,6 +67,7 @@
     return adjacentTileCoord;
 }
 
+//TODO:Refactor method to moveToTileCoord
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime
 {
     CGPoint newTileCoord = [self.mapDelegate tileCoordForPosition:newPosition];
@@ -94,8 +94,9 @@
     }
 }
 
--(void) updateDirectionWithTileCoord:(CGPoint) tileCoord
+-(CharacterDirection) getDirectionWithTileCoord:(CGPoint) tileCoord
 {
+    CharacterDirection nextDirection = kDirectionNull;
     CGPoint tileCoordSub = ccpSub(tileCoord,self.tileCoordinate );
     #if GRID_CHASER_DEBUG_MODE
         CCLOG(@"TileCoordSub is %@ - %@ = %@",NSStringFromCGPoint(tileCoord),
@@ -104,24 +105,72 @@
     #endif
     
     if(tileCoordSub.y == -1) {
-        direction = kDirectionUp;
+        nextDirection = kDirectionUp;
     }
     else if(tileCoordSub.y == 1) {
-        direction = kDirectionDown;
+        nextDirection = kDirectionDown;
     }
     else if(tileCoordSub.x == 1) {
-        direction = kDirectionRight;
+        nextDirection = kDirectionRight;
     }
     else if(tileCoordSub.x == -1) {
-        direction = kDirectionLeft;
+        nextDirection = kDirectionLeft;
     }
+    return nextDirection;
 }
 
--(void)updateSprite
+-(void) updateSprite
 {
     //This method should update the GameCharacter's sprite
     //based on the direction that the GameCharacter is facing
     //CCLOG(@"updateSprite should be overridden"); 
+}
+
+-(CharacterTurnAttempt) attemptTurnWithDirection:(CharacterDirection)newDirection andDeltaTime:(ccTime)deltaTime
+{
+    
+    CGPoint nextTileCoord = self.tileCoordinate;
+    BOOL isNextTileCollidable = YES;
+    int i = 1;
+     
+    while (i <= kTurnLimit) {
+        nextTileCoord = [self getNextTileCoordWithTileCoord:nextTileCoord andDirection:newDirection];
+        isNextTileCollidable = [mapDelegate isCollidableWithTileCoord:nextTileCoord];
+         
+        if (!isNextTileCollidable) {
+            break;
+        }
+        else {
+            nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:direction]; 
+            i++;
+        }
+     }
+     
+     if (isNextTileCollidable) {
+        return kTurnAttemptFailed;
+     }
+     else {
+         CGPoint moveDifference = ccpSub(self.position, [mapDelegate centerPositionFromTileCoord:nextTileCoord]);
+         float distanceToMove = ccpLength(moveDifference);
+         CharacterTurnAttempt turnAttempt;
+         if (distanceToMove < kTurnAttemptPerfect ) {
+             turnAttempt = kTurnAttemptPerfect;
+         }
+         else if(distanceToMove < kTurnAttemptGood) {
+             turnAttempt = kTurnAttemptGood;
+         }
+         else if(distanceToMove < kTurnAttemptOkay) {
+             turnAttempt = kTurnAttemptOkay;
+         }
+         else if(distanceToMove < kTurnAttemptPoor) {
+             turnAttempt = kTurnAttemptPoor;
+         }
+         else if(distanceToMove < kTurnAttemptTerrible) {
+             turnAttempt = kTurnAttemptTerrible;
+         }
+         targetTile = nextTileCoord;
+         return turnAttempt;
+     }
 }
 
 -(CGPoint) getNextTileCoordWithPath:(NSMutableArray *)path
@@ -148,6 +197,33 @@
     return nextTileCoord;
 }
 
+-(CGPoint) getNextTileCoordWithTileCoord:(CGPoint)tileCoord andDirection:(CharacterDirection)dir
+{
+    CGPoint nextTileLocation = tileCoord;
+    
+    switch (dir) {
+        case kDirectionUp:
+            nextTileLocation.y -= 1;
+            break;
+            
+        case kDirectionDown:
+            nextTileLocation.y += 1;
+            break;
+            
+        case kDirectionLeft:
+            nextTileLocation.x -= 1;
+            break;
+            
+        case kDirectionRight:
+            nextTileLocation.x += 1;
+            break;
+            
+        default:
+            break;
+    }
+    return nextTileLocation;
+}
+
 -(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime
 {
     //Check to see if path is valid
@@ -155,7 +231,7 @@
         //grab the next position from the path, get the center tile coordinate.
         CGPoint currentTileCoord = self.tileCoordinate;
         CGPoint nextTileCoord = CGPointFromString([path objectAtIndex:0]);
-        CGPoint nextPosition = [mapDelegate centerPositionAt :nextTileCoord];
+        CGPoint nextPosition = [mapDelegate centerPositionFromTileCoord :nextTileCoord];
         
         //check to see if we are not already at the first point
         if(CGPointEqualToPoint(currentTileCoord,nextTileCoord)) {
@@ -167,18 +243,11 @@
             }
             else {
                 nextTileCoord = CGPointFromString([path objectAtIndex:0]);
-                nextPosition = [mapDelegate centerPositionAt:nextTileCoord];
+                nextPosition = [mapDelegate centerPositionFromTileCoord:nextTileCoord];
             }
         }
         [self moveToPosition:nextPosition withDeltaTime:deltaTime];
     }
-}
-
--(void) setState:(CharacterState)newState; 
-{
-    state = newState;
-    //Based on state, run the required animations.
-    //Animations need to run here follow by changing of states.
 }
 
 -(void) updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
@@ -188,14 +257,7 @@
         CCLOG(@"Velocity: %f",newVelocity);
     #endif
     
-    //velocity = newVelocity;
-    
-    if (newVelocity > topSpeed) {
-        velocity = topSpeed;
-    }
-    else {
-        velocity = newVelocity;
-    }
+    velocity = newVelocity;
 }
 
 @end

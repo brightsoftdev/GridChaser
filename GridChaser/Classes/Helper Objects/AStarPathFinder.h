@@ -20,7 +20,7 @@
 }
 
 - (id)initWithTiledMap:(CCTMXTiledMap*)map withCollisionLayer:(CCTMXLayer*)collisionLayer;
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection;
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(CharacterDirection) startingDirection;
 - (BOOL) isCollidableWithTileCoord:(CGPoint)tileCoord;
 - (BOOL) isPathValid:(NSMutableArray*)path;
 
@@ -30,20 +30,20 @@
     //int x,y;
     CGPoint point;
     AStarNode *parent;
-    characterDirection direction;
+    CharacterDirection direction;
     int f;
     int g;
     int h;
 }
 
-+ (id) nodeWithPoint:(CGPoint)newPoint andDirection:(characterDirection)newDirection;
-- (id) initWithPoint:(CGPoint)newPoint andDirection:(characterDirection) newDirection;
++ (id) nodeWithPoint:(CGPoint)newPoint andDirection:(CharacterDirection)newDirection;
+- (id) initWithPoint:(CGPoint)newPoint andDirection:(CharacterDirection) newDirection;
 - (int) cost;
 
 
 @property (nonatomic,assign) CGPoint point;
 @property (nonatomic,assign) AStarNode *parent;
-@property (nonatomic,assign) characterDirection direction;
+@property (nonatomic,assign) CharacterDirection direction;
 @property (nonatomic,assign) int f;
 @property (nonatomic,assign) int g;
 @property (nonatomic,assign) int h;

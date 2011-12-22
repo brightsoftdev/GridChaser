@@ -13,12 +13,18 @@
 #import "PlayerCar.h"
 
 @interface EnemyCar : GameCharacter {
-    CGPoint lastKnownPlayerCoord;
+    CGPoint lastPlayerCoord;
+    CharacterDirection lastPlayerDirection;
     int vision;
+    EnemyState state;
+    CGFloat turnSuccessRate;
 }
 
-@property(nonatomic,readwrite,assign) CGPoint lastKnownPlayerCoord;
+@property(nonatomic,readwrite,assign) CGPoint lastPlayerCoord;
+@property(nonatomic,readwrite,assign) CharacterDirection lastPlayerDirection;
 @property(nonatomic,readwrite,assign) int vision;
+@property(nonatomic,readwrite,assign) EnemyState state;
+@property(nonatomic,readwrite,assign) CGFloat turnSuccessRate;
 
 
 @end

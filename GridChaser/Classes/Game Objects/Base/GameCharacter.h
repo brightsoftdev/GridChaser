@@ -12,27 +12,29 @@
     int characterHealth;
     CGPoint targetTile;
     NSMutableArray *targetPath;
-    characterDirection direction;
+    CharacterDirection direction;
     float velocity;
     float acceleration;
     float topSpeed;
-    CharacterState state;
 }
+
+#define kTurnLimit 2
 
 @property (nonatomic,assign) int characterHealth;
 @property (nonatomic,assign) CGPoint targetTile;
-@property (nonatomic,assign) characterDirection direction;
+@property (nonatomic,assign) CharacterDirection direction;
 @property (nonatomic,assign) float velocity;
 @property (nonatomic,assign) float acceleration;
 @property (nonatomic,assign) float topSpeed;
-@property (nonatomic,assign) CharacterState state;
 @property (nonatomic,retain) NSMutableArray *targetPath;
 
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime;
 -(CGPoint) getNextTileCoordWithPath:(NSMutableArray *)path;
--(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(characterDirection) dir;
+-(CGPoint) getNextTileCoordWithTileCoord:(CGPoint)tileCoord andDirection:(CharacterDirection)dir;
+-(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(CharacterDirection) dir;
 -(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;
--(void) updateDirectionWithTileCoord:(CGPoint) tileCoord;
+-(CharacterDirection) getDirectionWithTileCoord:(CGPoint) tileCoord;
 -(void) updateSprite;
+-(CharacterTurnAttempt) attemptTurnWithDirection:(CharacterDirection)newDirection andDeltaTime:(ccTime)deltaTime;
 
 @end

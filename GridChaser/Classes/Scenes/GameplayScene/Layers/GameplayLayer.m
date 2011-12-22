@@ -121,7 +121,7 @@
         [tempChar updateWithDeltaTime:deltaTime andArrayOfGameObjects:listOfGameObjects];
     }
     
-    [director updateWithDeltaTime:deltaTime andArrayOfGameObjects:listOfGameObjects];
+    //[director updateWithDeltaTime:deltaTime andArrayOfGameObjects:listOfGameObjects];
     
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     
@@ -189,7 +189,7 @@
         enemy.mapDelegate = gameMap;
         enemy.state = kStatePatrolling;
         
-        CGPoint spawnPoint = [gameMap centerPositionAt:CGPointMake(25, 4)];
+        CGPoint spawnPoint = [gameMap centerPositionFromTileCoord:CGPointMake(25, 4)];
         enemy.position = spawnPoint;
         
         [spriteBatchNode addChild:enemy z:kGameObjectZValue tag:kEnemyCarTag];
@@ -197,14 +197,14 @@
 }
 
 - (void) leftArrowButtonTapped:(id)sender {
-    player.direction = kDirectionLeft;
+    player.attemptedTurnDirection = kDirectionLeft;
     #if GRID_CHASER_DEBUG_MODE
         CCLOG(@"Tapped Left!");
     #endif
 }
 
 - (void) rightArrowButtonTapped:(id)sender {
-    player.direction = kDirectionRight;
+    player.attemptedTurnDirection = kDirectionRight;
     #if GRID_CHASER_DEBUG_MODE
         CCLOG(@"Tapped Right");
     #endif

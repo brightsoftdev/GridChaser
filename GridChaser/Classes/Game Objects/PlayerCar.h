@@ -14,25 +14,20 @@
 
 #define kTurnLimit 2
 
-#pragma TurnAttempt
-typedef enum {
-    kTurnAttemptSuccess,
-    kTurnAttemptFailed,
-    kTurnNotAttempted
-} turnAttempt;
-
 @interface PlayerCar : GameCharacter <CCTargetedTouchDelegate> {
     CGPoint lastTurnedTileCoord;
     BOOL hasTurnedCorrectly;
-    turnAttempt attemptedTurn;
+    CharacterDirection attemptedTurnDirection;
+    PlayerState state;
     id<GameplayLayerDelegate> gameplayLayerDelegate;
+    
 }
 
 -(void)moveWithDirectionWithDeltaTime:(ccTime)deltaTime;
 
 @property (nonatomic,readwrite,assign) CGPoint lastTurnedTileCoord;
-@property (nonatomic,readwrite,assign) turnAttempt attemptedTurn;
-@property (nonatomic,readwrite,assign) BOOL hasTurnedCorrectly;
+@property (nonatomic,readwrite,assign) CharacterDirection attemptedTurnDirection;
+@property (nonatomic,readwrite,assign) PlayerState state;
 @property (nonatomic,readwrite,assign) id<GameplayLayerDelegate> gameplayLayerDelegate;
 
 @end

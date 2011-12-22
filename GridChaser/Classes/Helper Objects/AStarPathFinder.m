@@ -10,7 +10,7 @@
 
 @interface AStarPathFinder (Private)
     - (AStarNode *)lowestCostNode;
-    - (AStarNode *) findShortestPathFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection;
+    - (AStarNode *) findShortestPathFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(CharacterDirection) startingDirection;
     
 @end
 
@@ -40,7 +40,7 @@
     [closedNodes release];
 }
 
-- (AStarNode *) findShortestPathFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection;
+- (AStarNode *) findShortestPathFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(CharacterDirection) startingDirection;
 {
     [openNodes removeAllObjects];
     [closedNodes removeAllObjects];
@@ -74,7 +74,7 @@
         for (int i = 0; i < numAdjacentTiles; i++) {
             int x = adjacentTiles[i][0];
             int y = adjacentTiles[i][1];
-            characterDirection newDirection = i;
+            CharacterDirection newDirection = i;
             
             if (closestNode.direction == kDirectionUp && y == 1) {
                 continue;
@@ -129,7 +129,7 @@
     return nil;
 }
 
-- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(characterDirection) startingDirection
+- (NSMutableArray*) getPathPointsFrom:(CGPoint)origTileCoord to:(CGPoint)destTileCoord withDirection:(CharacterDirection) startingDirection
 {
     NSMutableArray *paths = [NSMutableArray array];
     
@@ -211,12 +211,12 @@
 
 @synthesize point,parent,direction,f,g,h;
 
-+(id) nodeWithPoint:(CGPoint)newPoint andDirection:(characterDirection)newDirection
++(id) nodeWithPoint:(CGPoint)newPoint andDirection:(CharacterDirection)newDirection
 {
     return [[[AStarNode alloc] initWithPoint:newPoint andDirection:newDirection] autorelease];
 }
 
--(id) initWithPoint:(CGPoint)newPoint andDirection:(characterDirection) newDirection
+-(id) initWithPoint:(CGPoint)newPoint andDirection:(CharacterDirection) newDirection
 {
     self.point = newPoint;
     self.direction = newDirection;
