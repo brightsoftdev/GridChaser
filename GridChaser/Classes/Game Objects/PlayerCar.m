@@ -8,12 +8,17 @@
 
 #import "PlayerCar.h"
 
+@interface PlayerCar (Private)
+- (void) updateWithInput;
+@end
+
 @implementation PlayerCar
 
 #define kBaseVelocity 50
 
 @synthesize lastTurnedTileCoord,gameplayLayerDelegate;
 @synthesize attemptedTurnDirection,state;
+@synthesize upButton,leftButton,rightButton,downButton,lastPressedButton;
 
 -(id) init
 {
@@ -23,7 +28,8 @@
         acceleration = 20;
         topSpeed = 100;
         direction = kDirectionRight;
-        
+        isBraking = NO;
+        lastPressedButton = nil;
     }
     return self;
 }
@@ -79,28 +85,12 @@
 
 - (void)setAttemptedTurnDirection:(CharacterDirection)newDirection
 {
-    switch (newDirection) {
-        case kDirectionLeft:
-            if (direction == 0) newDirection = 3;
-            else {
-                newDirection = direction - 1;
-            }
-            break;
-            
-        case kDirectionRight:
-            if (direction == 3) newDirection = 0;
-            else {
-                newDirection = direction + 1;
-            }
-            break;
-        default:
-            break;
-    }
     attemptedTurnDirection = newDirection;
 }
 
 -(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
+    [self updateWithInput];
     [super updateWithDeltaTime:deltaTime andArrayOfGameObjects:arrayOfGameObjects];
     
     GameObject *marker = nil;
@@ -158,12 +148,14 @@
                     nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:attemptedTurnDirection];
                     attemptedTurnDirection = kDirectionNull;
                     nextDirection = [self getDirectionWithTileCoord:nextTileCoord];
-                    if ([self attemptTurnWithDirection:nextDirection andDeltaTime:deltaTime] == kTurnAttemptFailed) {
-                        nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:self.direction];
-                    }
-                    else {
-                        //if we are turning, then skip this frame
-                        break;
+                    if (nextDirection != self.direction && nextDirection != kDirectionNull) {
+                        if ([self attemptTurnWithDirection:nextDirection andDeltaTime:deltaTime] == kTurnAttemptFailed) {
+                            nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:self.direction];
+                        }
+                        else {
+                            //if we are turning, then skip this frame
+                            break;
+                        }
                     }
                 }
                 else {
@@ -212,24 +204,55 @@
     }
 }
 
-#pragma mark -
-#pragma mark CCTouchDispatcher
-
-- (void)onEnter
+- (void) updateWithInput
 {
-	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
-	[super onEnter];
-}
-
-- (void)onExit
-{
-	[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
-	[super onExit];
+    BOOL isButtonSelected = upButton.isSelected || leftButton.isSelected || rightButton.isSelected || downButton.isSelected;
+    
+    if (isButtonSelected && lastPressedButton == nil) {
+        //start braking
+        if(upButton.isSelected == YES)
+        {
+            lastPressedButton = upButton;
+        }
+        else if(leftButton.isSelected == YES)
+        {
+            lastPressedButton = leftButton;
+        }
+        else if(rightButton.isSelected == YES)
+        {
+            lastPressedButton = rightButton;
+        }
+        else if(downButton.isSelected == YES)
+        {
+            lastPressedButton = downButton;
+        }
+        velocity = velocity * 0.9;
+    }
+    else if(isButtonSelected == NO && lastPressedButton != nil) {
+        if(lastPressedButton == upButton)
+        {
+            self.attemptedTurnDirection = kDirectionUp;
+        }
+        else if(lastPressedButton == leftButton)
+        {
+            self.attemptedTurnDirection = kDirectionLeft;
+        }
+        else if(lastPressedButton == rightButton)
+        {
+            self.attemptedTurnDirection = kDirectionRight;
+        }
+        else if(lastPressedButton == downButton)
+        {
+            self.attemptedTurnDirection = kDirectionDown;
+        }
+        lastPressedButton = nil;
+    }
 }
 
 #pragma mark - 
 #pragma mark MoveWithDirection
 
+//TODO:Move to GameCharacter.m
 - (void)moveWithDirectionWithDeltaTime:(ccTime)deltaTime
 {
     CGPoint nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:direction];
@@ -257,20 +280,4 @@
     }
         return YES;
 }
-
-- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event 
-{
-    
-}
-
-- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event 
-{
-    
-}
-
-- (void)ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    
-}
-
 @end

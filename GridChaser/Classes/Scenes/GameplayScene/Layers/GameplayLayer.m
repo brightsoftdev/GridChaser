@@ -11,8 +11,13 @@
 #import "FileConstants.h"
 #import "GameScene.h"
 
+@interface GameplayLayer (Private)
+- (void) initButtons;
+@end
+
 @implementation GameplayLayer
 
+@synthesize upButton,leftButton,rightButton,downButton;
 @synthesize gameMap;
 
 +(CCScene *) scene
@@ -41,7 +46,12 @@
 	[super dealloc];
     [player release];
     [gameMap release];
+    [director release];
     [spriteBatchNode release];
+    upButton = nil;
+    leftButton = nil;
+    rightButton = nil;
+    downButton = nil;
 }
 
 // on "init" you need to initialize your instance
@@ -69,6 +79,9 @@
         director = [[AIDirector alloc] init];
         director.gameplayLayerDelegate = self;
         
+        //initialize buttons
+        [self initButtons];
+        
         //Initialize Player and Enemy
         player = [[PlayerCar alloc] initWithSpriteFrameName:kPlayerCarImage];
         player.mapDelegate = gameMap;
@@ -84,18 +97,12 @@
         int x = [[spawnPoint valueForKey:@"x"] intValue];
         int y = [[spawnPoint valueForKey:@"y"] intValue];
         player.position = CGPointMake(x, y);
+        player.upButton = upButton;
+        player.leftButton = leftButton;
+        player.rightButton = rightButton;
+        player.downButton = downButton;
         
-        CGSize winSize = [[CCDirector sharedDirector] winSize];
-        
-        leftButtonArrow = [CCMenuItemImage itemFromNormalImage:kGUILeftArrow2 selectedImage:kGUILeftArrow2 
-                                                        target:self selector:@selector(leftArrowButtonTapped:)];
-        leftButtonArrow.position = ccp(0+20,winSize.height * 0.5);
-        
-        rightButtonArrow = [CCMenuItemImage itemFromNormalImage:kGUIRightArrow2 selectedImage:kGUIRightArrow2 
-                                                         target:self selector:@selector(rightArrowButtonTapped:)];
-        rightButtonArrow.position = ccp(winSize.width - 20, winSize.height * 0.5);
-        
-        guiMenu = [CCMenu menuWithItems:leftButtonArrow,rightButtonArrow, nil];
+        guiMenu = [CCMenu menuWithItems:leftButton,rightButton,upButton,downButton, nil];
         guiMenu.position = CGPointZero;
         
         [self addGameObject:kGameObjectMarker];
@@ -110,8 +117,38 @@
 	return self;
 }
 
+-(void) initButtons 
+{
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    CGRect rect;
+    
+    leftButton = [CCMenuItemImage itemFromNormalImage:kGUISideButton selectedImage:kGUISideButton 
+                                               target:self selector:@selector(leftButtonTapped:)];
+    rect = [leftButton rect];
+    leftButton.position = ccp(0+rect.size.width * 0.5,winSize.height * 0.5);
+    
+    rightButton = [CCMenuItemImage itemFromNormalImage:kGUISideButton selectedImage:kGUISideButton 
+                                                target:self selector:@selector(rightButtonTapped:)];
+    rect = [rightButton rect];
+    rightButton.position = ccp(winSize.width - rect.size.width * 0.5, winSize.height * 0.5);
+    
+    
+    upButton = [CCMenuItemImage itemFromNormalImage:kGUITopButton selectedImage:kGUITopButton
+                                             target:self selector:@selector(upButtonTapped:)];
+    rect = [upButton rect];
+    upButton.position = ccp(winSize.width * 0.5,winSize.height - rect.size.height * 0.5);
+    
+    
+    downButton = [CCMenuItemImage itemFromNormalImage:kGUITopButton selectedImage:kGUITopButton
+                                               target:self selector:@selector(downButtonTapped:)];
+    rect = [downButton rect];
+    downButton.position = ccp(winSize.width * 0.5,0 + rect.size.height * 0.5);
+}
+
 -(void) update:(ccTime)deltaTime 
 {
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    
     #if CC_ENABLE_PROFILERS
         CCProfilingBeginTimingBlock(updateLoopProfiler);
     #endif
@@ -123,10 +160,8 @@
     
     //[director updateWithDeltaTime:deltaTime andArrayOfGameObjects:listOfGameObjects];
     
-    CGSize winSize = [[CCDirector sharedDirector] winSize];
-    
-    int x = MAX(player.position.x, winSize.width / 2);
-    int y = MAX(player.position.y, winSize.height / 2);
+    int x = MAX(player.position.x, winSize.width * 0.5);
+    int y = MAX(player.position.y, winSize.height * 0.5);
     
     x = MIN(x, (gameMap.mapSize.width * gameMap.tileSize.width) 
             - winSize.width / 2);
@@ -137,6 +172,7 @@
     CGPoint centerOfView = ccp(winSize.width/2, winSize.height/2);
     CGPoint viewPoint = ccpSub(centerOfView,actualPosition);
     self.position = viewPoint;
+    
     guiMenu.position = ccpNeg(viewPoint);    
     
     #if CC_ENABLE_PROFILERS
@@ -196,15 +232,33 @@
     }
 }
 
-- (void) leftArrowButtonTapped:(id)sender {
+- (void) leftButtonTapped:(id)sender 
+{
     player.attemptedTurnDirection = kDirectionLeft;
     #if GRID_CHASER_DEBUG_MODE
         CCLOG(@"Tapped Left!");
     #endif
 }
 
-- (void) rightArrowButtonTapped:(id)sender {
+- (void) rightButtonTapped:(id)sender 
+{
     player.attemptedTurnDirection = kDirectionRight;
+    #if GRID_CHASER_DEBUG_MODE
+        CCLOG(@"Tapped Right");
+    #endif
+}
+
+- (void) upButtonTapped:(id)sender 
+{
+    player.attemptedTurnDirection = kDirectionUp;
+    #if GRID_CHASER_DEBUG_MODE
+        CCLOG(@"Tapped Right");
+    #endif
+}
+
+- (void) downButtonTapped:(id)sender 
+{
+    player.attemptedTurnDirection = kDirectionDown;
     #if GRID_CHASER_DEBUG_MODE
         CCLOG(@"Tapped Right");
     #endif

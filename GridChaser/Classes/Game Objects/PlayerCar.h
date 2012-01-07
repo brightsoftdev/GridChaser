@@ -17,10 +17,16 @@
 @interface PlayerCar : GameCharacter <CCTargetedTouchDelegate> {
     CGPoint lastTurnedTileCoord;
     BOOL hasTurnedCorrectly;
+    BOOL isBraking;
     CharacterDirection attemptedTurnDirection;
     PlayerState state;
     id<GameplayLayerDelegate> gameplayLayerDelegate;
-    
+
+    CCMenuItem *upButton;
+    CCMenuItem *leftButton;
+    CCMenuItem *rightButton;
+    CCMenuItem *downButton;
+    CCMenuItem *lastPressedButton;
 }
 
 -(void)moveWithDirectionWithDeltaTime:(ccTime)deltaTime;
@@ -29,5 +35,10 @@
 @property (nonatomic,readwrite,assign) CharacterDirection attemptedTurnDirection;
 @property (nonatomic,readwrite,assign) PlayerState state;
 @property (nonatomic,readwrite,assign) id<GameplayLayerDelegate> gameplayLayerDelegate;
+@property (nonatomic,readwrite,assign) CCMenuItem *upButton;
+@property (nonatomic,readwrite,assign) CCMenuItem *leftButton;
+@property (nonatomic,readwrite,assign) CCMenuItem *rightButton;
+@property (nonatomic,readwrite,assign) CCMenuItem *downButton;
+@property (nonatomic,readwrite,assign) CCMenuItem *lastPressedButton;
 
 @end

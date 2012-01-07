@@ -20,11 +20,12 @@
     CCSpriteBatchNode *spriteBatchNode;
     Map *gameMap;
     
-    CCMenuItem *leftButtonArrow;
-    CCMenuItem *rightButtonArrow;
+    CCMenuItem *leftButton;
+    CCMenuItem *rightButton;
+    CCMenuItem *upButton;
+    CCMenuItem *downButton;
     
     CCMenu *guiMenu;
-    
     
     #if CC_ENABLE_PROFILERS
     CCProfilingTimer *updateLoopProfiler;
@@ -34,5 +35,8 @@
 +(CCScene *)scene;
 
 @property (nonatomic,retain) Map *gameMap;
-
+@property (nonatomic,readonly,retain) CCMenuItem *upButton;
+@property (nonatomic,readonly,retain) CCMenuItem *leftButton;
+@property (nonatomic,readonly,retain) CCMenuItem *rightButton;
+@property (nonatomic,readonly,retain) CCMenuItem *downButton;
 @end
