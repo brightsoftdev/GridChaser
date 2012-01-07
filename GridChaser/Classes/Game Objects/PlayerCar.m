@@ -163,7 +163,7 @@
                     
                     if ([mapDelegate isCollidableWithTileCoord:nextTileCoord]) {
                         self.state = kStateIdle;
-                        //TODO: Override state setter and change velocity in that method.
+                        //SHERVIN: Override state setter and change velocity in that method.
                         velocity = kBaseVelocity;
                         break;
                     }
@@ -247,17 +247,6 @@
         }
         lastPressedButton = nil;
     }
-}
-
-#pragma mark - 
-#pragma mark MoveWithDirection
-
-//TODO:Move to GameCharacter.m
-- (void)moveWithDirectionWithDeltaTime:(ccTime)deltaTime
-{
-    CGPoint nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:direction];
-    CGPoint nextTilePosition = [mapDelegate centerPositionFromTileCoord:nextTileCoord];
-    [self moveToPosition:nextTilePosition withDeltaTime:deltaTime];
 }
 
 #pragma mark CCTargetedTouch Methods

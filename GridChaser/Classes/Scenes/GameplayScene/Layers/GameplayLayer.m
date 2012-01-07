@@ -71,7 +71,7 @@
         
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:kSpriteSheetPlist];
         
-        //TODO: Give a better capacity value to prevent unneccessary resizing.
+        //SHERVIN: Give a better capacity value to prevent unneccessary resizing.
         spriteBatchNode = [[CCSpriteBatchNode alloc] initWithFile:kSpriteSheetImage capacity:0];
         
         gameMap = [[Map alloc] init];

@@ -29,8 +29,6 @@
     CCMenuItem *lastPressedButton;
 }
 
--(void)moveWithDirectionWithDeltaTime:(ccTime)deltaTime;
-
 @property (nonatomic,readwrite,assign) CGPoint lastTurnedTileCoord;
 @property (nonatomic,readwrite,assign) CharacterDirection attemptedTurnDirection;
 @property (nonatomic,readwrite,assign) PlayerState state;

@@ -35,7 +35,7 @@
 -(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(CharacterDirection) dir;
 {
     CGPoint adjacentTileCoord;
-    //TODO: Remove code which relies on adjacentTiles[][] order to work.
+    //SHERVIN: Remove code which relies on adjacentTiles[][] order to work.
     switch (dir) {
         case kDirectionUp:
         {
@@ -67,7 +67,7 @@
     return adjacentTileCoord;
 }
 
-//TODO:Refactor method to moveToTileCoord
+//SHERVIN:Refactor method to moveToTileCoord
 -(void) moveToPosition:(CGPoint)newPosition withDeltaTime:(ccTime)deltaTime
 {
     CGPoint newTileCoord = [self.mapDelegate tileCoordForPosition:newPosition];

@@ -22,7 +22,7 @@
     if (self) {
         tiledMap = [map retain];
         collisionLayer = [layer retain];
-        //TODO: Find a better Capacity value to prevent resizing
+        //SHERVIN: Find a better Capacity value to prevent resizing
         openNodes = [[NSMutableSet alloc] initWithCapacity:16];
         closedNodes = [[NSMutableSet alloc] initWithCapacity:32];
         collisionKey = kMapCollidableProperty;
