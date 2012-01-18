@@ -22,6 +22,7 @@
         acceleration = 10;
         topSpeed = 125;
         characterHealth = 100;
+        direction = kDirectionNull;
     }
     return self;
 }
@@ -104,19 +105,52 @@
               NSStringFromCGPoint(tileCoord));
     #endif
     
-    if(tileCoordSub.y == -1) {
+    if(tileCoordSub.y <= -1) {
         nextDirection = kDirectionUp;
     }
-    else if(tileCoordSub.y == 1) {
+    else if(tileCoordSub.y >= 1) {
         nextDirection = kDirectionDown;
     }
-    else if(tileCoordSub.x == 1) {
+    else if(tileCoordSub.x >= 1) {
         nextDirection = kDirectionRight;
     }
-    else if(tileCoordSub.x == -1) {
+    else if(tileCoordSub.x <= -1) {
         nextDirection = kDirectionLeft;
     }
     return nextDirection;
+}
+
+-(CharacterDirection) getOppositeDirectionFromDirection:(CharacterDirection) dir
+{
+    CharacterDirection oppositeDirection = kDirectionNull;
+        switch (dir) {
+            case kDirectionUp:
+                oppositeDirection = kDirectionDown;
+                break;
+                
+            case kDirectionDown:
+                oppositeDirection = kDirectionUp;
+                break;
+                
+            case kDirectionLeft:
+                oppositeDirection = kDirectionRight;
+                break;
+                
+            case kDirectionRight:
+                oppositeDirection = kDirectionLeft;
+                break;
+                
+            case kDirectionNull:
+                CCLOG(@"Warning: Attempting to get opposite direction of kNullDirection");
+                oppositeDirection = kDirectionNull;
+                break;
+                
+            default:
+                CCLOG(@"Warning: Attempting to get opposite direction of a non CharacterDirection object");
+                oppositeDirection = kDirectionNull;
+                break;
+        }
+    return oppositeDirection;
 }
 
 -(void) updateSprite
@@ -252,12 +286,7 @@
 
 -(void) updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
-    float newVelocity = velocity + acceleration * deltaTime;
-    #if GRID_CHASER_DEBUG_MODE
-        CCLOG(@"Velocity: %f",newVelocity);
-    #endif
-    
-    velocity = newVelocity;
+    //OVERLOAD ME
 }
 
 @end

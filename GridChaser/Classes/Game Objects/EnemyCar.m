@@ -20,7 +20,7 @@
         velocity = kBaseVelocity;
         acceleration = 1;
         topSpeed = 50;
-        vision = 4;
+        vision = 7;
         lastPlayerCoord = ccp(-1, -1);
         lastPlayerDirection = -1;
         state = kStatePatrolling;
@@ -36,6 +36,9 @@
 
 -(void) setState:(EnemyState)newState
 {
+    targetTile = ccp(-1, -1);
+    [targetPath removeAllObjects];
+    
     switch (newState) {
         case kStatePatrolling: {
             acceleration = 1;
@@ -49,7 +52,6 @@
         }
         case kStateCreeping: {
             turnSuccessRate = 1.0;
-            self.state = kStateChasing;
             break;
         }
         case kStateChasing: {
@@ -63,46 +65,6 @@
             break;
     }
     state = newState;
-}
-
--(CGPoint)getNextPosition
-{
-    CGPoint currentTile = self.tileCoordinate;
-    CGPoint bestPosition;
-    float bestDistance = INFINITY;
-    
-    for (int i = 0; i < numAdjacentTiles; i++) {
-        int x = adjacentTiles[i][0];
-        int y = adjacentTiles[i][1];
-        
-        if (self.direction == kDirectionDown  && y == -1) {
-            continue;
-        }
-        else if(self.direction ==  kDirectionUp && y == 1) {
-            continue;
-        }
-        else if(self.direction == kDirectionRight && x == -1) {
-            continue;
-        }
-        else if(self.direction == kDirectionLeft && x == 1) {
-            continue;
-        }
-        
-        CGPoint adjacentTile = ccp(currentTile.x + x, currentTile.y + y);
-        
-        if (![mapDelegate isCollidableWithTileCoord:adjacentTile]) {
-            CGPoint adjacentPosition = [mapDelegate centerPositionFromTileCoord:adjacentTile];
-            CGPoint lastKnownPlayerPosition = [mapDelegate centerPositionFromTileCoord:lastPlayerCoord];
-            CGPoint moveDifference = ccpSub(lastKnownPlayerPosition, adjacentPosition);
-            float distanceToMove = ccpLength(moveDifference);
-            
-            if (distanceToMove < bestDistance) {
-                bestDistance = distanceToMove;
-                bestPosition = adjacentPosition;
-            }
-        }  
-    }
-    return bestPosition;
 }
 
 -(CharacterTurnAttempt) attemptTurnWithDeltaTime:(ccTime)deltaTime
@@ -143,21 +105,23 @@
 {
     CGPoint adjacentTile = self.tileCoordinate;
     for (int i = 0; i < vision; i++) {
-        adjacentTile = [self getAdjacentTileFromTileCoord:adjacentTile WithDirection:direction];
-        
+
         if ([self.mapDelegate isCollidableWithTileCoord:adjacentTile]) {
             break;
         }
         else if (CGPointEqualToPoint(gameObject.tileCoordinate, adjacentTile)) {
             return YES;
         }
+        
+        adjacentTile = [self getAdjacentTileFromTileCoord:adjacentTile WithDirection:direction];
     }
     return NO;
 }
 
 -(void)updateWithDeltaTime:(ccTime)deltaTime andArrayOfGameObjects:(CCArray *)arrayOfGameObjects
 {
-    [super updateWithDeltaTime:deltaTime andArrayOfGameObjects:arrayOfGameObjects];
+    float newVelocity = velocity + acceleration * deltaTime;
+    velocity = newVelocity;
     
     PlayerCar *player = nil;
     CGPoint nextTileCoord = ccp(-1, -1);
@@ -175,6 +139,9 @@
      *in a chasing the player and we should increment the successRate.
      */
     if (turnSuccessRate != kSuccessRatePerfect) {
+        if(turnSuccessRate + 2.0 > 100) {
+            turnSuccessRate = 100;
+        }
         turnSuccessRate += 2.0;
     }
     
@@ -186,6 +153,7 @@
         {
             if ([self isGameObjectVisible:player]) {
                 self.state = kStateCreeping;
+                nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:self.direction];
                 break;
             }
             else {            
@@ -202,6 +170,7 @@
                     
                     targetTile = nextTargetTile;
                     self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile withDirection:direction];
+                    nextTileCoord = [self getNextTileCoordWithPath:targetPath];
                 }
                 else if(targetPath.count > 0 && !CGPointEqualToPoint(targetTile, self.tileCoordinate)) {
                     nextTileCoord = [self getNextTileCoordWithPath:targetPath];
@@ -218,6 +187,8 @@
             
         case kStateCreeping:
         {
+            self.state = kStateChasing;
+            nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:self.direction];
             break;
         }
             
@@ -244,25 +215,40 @@
                 //potential reasons for loss of visibility, turning, getting out of vision range.
                 
                 if ([self isGameObjectVisible:player]) {
-                    lastPlayerCoord = player.tileCoordinate; 
-                    
+                    lastPlayerCoord = player.tileCoordinate;
+                    targetTile = player.tileCoordinate;
                     
                     if (lastPlayerDirection != player.direction) {
                         lastPlayerDirection = player.direction;
                         turnSuccessRate = 0.0;
                     }
+                    nextTileCoord = lastPlayerCoord;
+                    break;
                 }
                 else {
-                    if(CGPointEqualToPoint(self.tileCoordinate, lastPlayerCoord)) {
+                    if(CGPointEqualToPoint(self.tileCoordinate, targetTile)) {
                         self.state = kStateAlarmed;
+                        nextTileCoord = ccp(-1, -1);
                         break;
                     }
+                    else if(targetPath.count == 0) {
+                        
+                        if(CGPointEqualToPoint(targetTile, ccp(-1, -1))) {
+                            targetTile = [self getNextTileCoordWithTileCoord:lastPlayerCoord andDirection:lastPlayerDirection];
+                        }
+
+                        self.targetPath = [mapDelegate getPathPointsFrom:self.tileCoordinate to:targetTile withDirection:direction];
+                        nextTileCoord = [self getNextTileCoordWithPath:targetPath];
+                    }
+                    else if(targetPath.count > 0) {
+                        nextTileCoord = [self getNextTileCoordWithPath:targetPath];
+                    }
+
                 }
                 
-                CGPoint nextTileCoord = [self getNextTileCoordWithTileCoord:lastPlayerCoord andDirection:lastPlayerDirection];
-                CharacterDirection nextDirection = [self getDirectionWithTileCoord:nextTileCoord];
+                nextDirection = [self getDirectionWithTileCoord:nextTileCoord];
                 
-                if (nextDirection != self.direction) {
+                if (nextDirection != self.direction && nextDirection != kDirectionNull) {
                     CharacterTurnAttempt turnAttempt = [self attemptTurnWithDeltaTime:deltaTime];
                     
                     if (turnAttempt != kTurnAttemptFailed) {
@@ -272,22 +258,25 @@
                         nextTileCoord = [self getNextTileCoordWithTileCoord:self.tileCoordinate andDirection:self.direction];
                     }
                 }
+                break;
             }
         }
             
         case kStateAlarmed:
         {
-            break;
+            self.state = kStatePatrolling;
         }
     }
 
-    nextDirection = [self getDirectionWithTileCoord:nextTileCoord];
-    if(nextDirection != kDirectionNull) {
-        self.direction = nextDirection;
+    if(!CGPointEqualToPoint(nextTileCoord, ccp(-1, -1))) {
+        nextDirection = [self getDirectionWithTileCoord:nextTileCoord];
+        if(nextDirection != kDirectionNull) {
+            self.direction = nextDirection;
+        }
+        [self updateSprite];
+        [self moveToPosition:[mapDelegate centerPositionFromTileCoord:nextTileCoord] withDeltaTime:deltaTime];
     }
-    [self updateSprite];
-    [self moveToPosition:[mapDelegate centerPositionFromTileCoord:nextTileCoord] withDeltaTime:deltaTime];
-
+    
 }
 
 -(void) updateSprite

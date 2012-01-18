@@ -122,25 +122,19 @@
     CGSize winSize = [[CCDirector sharedDirector] winSize];
     CGRect rect;
     
-    leftButton = [CCMenuItemImage itemFromNormalImage:kGUISideButton selectedImage:kGUISideButton 
-                                               target:self selector:@selector(leftButtonTapped:)];
+    leftButton = [CCMenuItemImage itemFromNormalImage:kGUISideButton selectedImage:kGUISideButton];
     rect = [leftButton rect];
     leftButton.position = ccp(0+rect.size.width * 0.5,winSize.height * 0.5);
     
-    rightButton = [CCMenuItemImage itemFromNormalImage:kGUISideButton selectedImage:kGUISideButton 
-                                                target:self selector:@selector(rightButtonTapped:)];
+    rightButton = [CCMenuItemImage itemFromNormalImage:kGUISideButton selectedImage:kGUISideButton];
     rect = [rightButton rect];
     rightButton.position = ccp(winSize.width - rect.size.width * 0.5, winSize.height * 0.5);
     
-    
-    upButton = [CCMenuItemImage itemFromNormalImage:kGUITopButton selectedImage:kGUITopButton
-                                             target:self selector:@selector(upButtonTapped:)];
+    upButton = [CCMenuItemImage itemFromNormalImage:kGUITopButton selectedImage:kGUITopButton];
     rect = [upButton rect];
     upButton.position = ccp(winSize.width * 0.5,winSize.height - rect.size.height * 0.5);
     
-    
-    downButton = [CCMenuItemImage itemFromNormalImage:kGUITopButton selectedImage:kGUITopButton
-                                               target:self selector:@selector(downButtonTapped:)];
+    downButton = [CCMenuItemImage itemFromNormalImage:kGUITopButton selectedImage:kGUITopButton];
     rect = [downButton rect];
     downButton.position = ccp(winSize.width * 0.5,0 + rect.size.height * 0.5);
 }
@@ -227,41 +221,10 @@
         
         CGPoint spawnPoint = [gameMap centerPositionFromTileCoord:CGPointMake(25, 4)];
         enemy.position = spawnPoint;
+        enemy.direction = kDirectionUp;
         
         [spriteBatchNode addChild:enemy z:kGameObjectZValue tag:kEnemyCarTag];
     }
-}
-
-- (void) leftButtonTapped:(id)sender 
-{
-    player.attemptedTurnDirection = kDirectionLeft;
-    #if GRID_CHASER_DEBUG_MODE
-        CCLOG(@"Tapped Left!");
-    #endif
-}
-
-- (void) rightButtonTapped:(id)sender 
-{
-    player.attemptedTurnDirection = kDirectionRight;
-    #if GRID_CHASER_DEBUG_MODE
-        CCLOG(@"Tapped Right");
-    #endif
-}
-
-- (void) upButtonTapped:(id)sender 
-{
-    player.attemptedTurnDirection = kDirectionUp;
-    #if GRID_CHASER_DEBUG_MODE
-        CCLOG(@"Tapped Right");
-    #endif
-}
-
-- (void) downButtonTapped:(id)sender 
-{
-    player.attemptedTurnDirection = kDirectionDown;
-    #if GRID_CHASER_DEBUG_MODE
-        CCLOG(@"Tapped Right");
-    #endif
 }
 
 @end

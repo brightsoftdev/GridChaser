@@ -34,6 +34,7 @@
 -(CGPoint) getAdjacentTileFromTileCoord:(CGPoint)tileCoord WithDirection:(CharacterDirection) dir;
 -(void) moveWithPath:(NSMutableArray *)path withDeltaTime:(ccTime)deltaTime;
 -(CharacterDirection) getDirectionWithTileCoord:(CGPoint) tileCoord;
+-(CharacterDirection) getOppositeDirectionFromDirection:(CharacterDirection) dir;
 -(void) updateSprite;
 -(CharacterTurnAttempt) attemptTurnWithDirection:(CharacterDirection)newDirection andDeltaTime:(ccTime)deltaTime;
 

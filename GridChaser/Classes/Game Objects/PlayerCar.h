@@ -16,9 +16,8 @@
 
 @interface PlayerCar : GameCharacter <CCTargetedTouchDelegate> {
     CGPoint lastTurnedTileCoord;
-    BOOL hasTurnedCorrectly;
-    BOOL isBraking;
     CharacterDirection attemptedTurnDirection;
+    BOOL isLaneChanging;
     PlayerState state;
     id<GameplayLayerDelegate> gameplayLayerDelegate;
 
@@ -33,6 +32,7 @@
 @property (nonatomic,readwrite,assign) CharacterDirection attemptedTurnDirection;
 @property (nonatomic,readwrite,assign) PlayerState state;
 @property (nonatomic,readwrite,assign) id<GameplayLayerDelegate> gameplayLayerDelegate;
+@property (nonatomic,readwrite,assign) BOOL isLaneChanging;
 @property (nonatomic,readwrite,assign) CCMenuItem *upButton;
 @property (nonatomic,readwrite,assign) CCMenuItem *leftButton;
 @property (nonatomic,readwrite,assign) CCMenuItem *rightButton;
